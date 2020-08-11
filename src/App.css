@@ -1,38 +1,119 @@
-.App {
-  text-align: center;
+* {
+  margin: 0px;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
+.ControlPanel {
+  width: 100%;
+  height: 80px;
   background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+}
+
+.ControlPanel-column {
+  float: left;
+  width: calc(100% / 7);
+  height: 100%;
   color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-.App-link {
-  color: #61dafb;
+.Dropdown, .SliderDropdown {
+  font-size: 24px;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.Dropdown-header {
+  display: flex;
+  justify-content: center;
+}
+
+.Algorithm-Dropdown-list, .Speed-Dropdown-list, .Tool-Dropdown-list, .Clear-Dropdown-list, .SliderDropdown-list {
+  position: absolute;
+  top: 85px;
+  border-radius: 10px;
+  background-color: #282c34;
+  list-style-type: none;
+  padding: 5px;
+  text-align: left;
+}
+
+.Algorithm-Dropdown-list {
+  width: 250px;
+}
+
+.Speed-Dropdown-list {
+  width: 150px;
+}
+
+.Tool-Dropdown-list {
+  width: 120px;
+}
+
+.Clear-Dropdown-list {
+  width: 100px;
+}
+
+.SliderDropdown-list {
+  width: 150px;
+  height: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.slider-text {
+  height: 100%;
+  width: 90%;
+  display: flex;
+  justify-content: center;
+  font-size: 72px;
+}
+
+.slider
+{
+    writing-mode: bt-lr; /* IE */
+    -webkit-appearance: slider-vertical; /* WebKit */
+    width: 0%;
+    height: 95%;
+    padding: 0 10px;
+    transform: translate(0,0);
+}
+
+.Dropdown-list-item {
+  font-size: 20px;
+  padding: 10px;
+}
+
+.Dropdown-list-item:hover {
+  background-color: #2e8b57;
+  border-radius: 10px;
+}
+
+.check {
+  float: right;
+}
+
+.Start-Button {
+  font-size: 24px;
+  border: none;
+  color: white;
+  width: 60%;
+  height: 50%;
+  background-color: seagreen;
+  border-radius: 15px;
+}
+
+.Stop-Button {
+  font-size: 24px;
+  border: none;
+  color: white;
+  width: 60%;
+  height: 50%;
+  background-color: firebrick;
+  border-radius: 15px;
+}
+
+.Dropdown:hover, .Start-Button:hover, .Stop-Button:hover {
+  cursor: default;
+  cursor: pointer;
 }
