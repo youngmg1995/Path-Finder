@@ -1,6 +1,6 @@
 {
     "name": "Path-Finder",
-    "short_name": "React Path-Finding-App",
+    "short_name": "Path-Finder",
     "icons": [
         {
             "src": "/android-chrome-192x192.png",
@@ -13,6 +13,7 @@
             "type": "image/png"
         }
     ],
+    "start_url": ".",
     "theme_color": "#ffffff",
     "background_color": "#ffffff",
     "display": "standalone"
