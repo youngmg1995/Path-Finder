@@ -1,4 +1,4 @@
-<div><img width=140 heigth=140 align="left" src="/public/android-chrome-192x192.png" href="https://youngmg1995.github.io/Path-Finding-App/"></div>
+<p align="left"><img width=140 heigth=140 align="left" src="/public/android-chrome-192x192.png" href="https://youngmg1995.github.io/Path-Finding-App/"></p>
  
 # Path-Finder
 React App for Visualizing Path-finding Algorithms
