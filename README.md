@@ -20,7 +20,7 @@ All algorithms utilize a priority queue to order the paths and to allow for back
 ### Weighted
   - __*Branch & Bound:*__ Weighted equivalent of breadth-first search, always extending the least costly path so far to all available nodes. Guarantees the least costly path will be found, if possible.
     - *Note* - This algorithm is equivalent to Dijkstra's. I prefer to call it a branch & bound algorithm that utilizes an extended list because that is how I was taught it and this makes my understanding of it more general.
-  - __*A\*:*__ An altered version of branch & bound or Dijkstra's that utilizes an admissable heuristic. Like branch & bound the algorithm always extends the best path so far to all available nodes; however, this algorithm considers the best path to be the one with the smallest combined path cost and estimated cost from the current node to the target using the heuristic. Gaurantees the least costly path will be found, if possible.
+  - __*A\*:*__ An altered version of branch & bound or Dijkstra's that utilizes an admissable heuristic. Like branch & bound the algorithm always extends the best path so far to all available nodes; however, this algorithm considers the best path to be the one with the smallest combined path cost and estimated cost from the current node to the target using the heuristic. Guarantees the least costly path will be found, if possible.
   
 ## Resources
   - __*React:*__ As mentioned previously, this project was bootstrapped using [Create React App](https://create-react-app.dev/). I would highly recommend this tool and the linked resources to anyone else considering building a single page app, since it makes building, developing, and deploying the app much simpler.
