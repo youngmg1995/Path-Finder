@@ -7,11 +7,9 @@ import {pathFinderAnimation} from '../utils/animations';
 class PathFinder extends React.Component {
     constructor(props) {
         super(props);
-        // Control Panel Height
-        this.controlPanelHeight = 80;
-        // Setting Up Canvas
         const { innerWidth: width, innerHeight: height } = window
-        this.canvasHeight = height-this.controlPanelHeight-4;
+        // Setting Up Canvas
+        this.canvasHeight = height*.9-4;
         this.canvasWidth = width;
         this.canvasRef = React.createRef();
         const s = 15;
