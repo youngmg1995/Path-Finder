@@ -1,6 +1,6 @@
 import React from 'react';
 import PathFinder from './components/PathFinder';
-import './App.css';
+import './App2.css';
 
 function App() {
   return (
