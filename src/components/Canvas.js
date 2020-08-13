@@ -62,6 +62,7 @@ class Canvas extends React.Component {
                 width = {this.props.width}
                 height = {this.props.height}
                 onMouseDown={this.props.running ? null : (downEvent) => this.props.onMouseDown(downEvent)}
+                onTouchStart={this.props.running ? null : (startEvent) => this.props.onTouchStart(startEvent)}
             />
         );
     }

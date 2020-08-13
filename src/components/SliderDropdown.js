@@ -58,6 +58,7 @@ class SliderDropdown extends React.Component {
                         onInput={(event) => this.changeValue(event)}
                         onMouseUp={(event) => this.submitValue(event)}
                         onKeyDown={(event) => {if (event.key === "Enter") this.submitValue(event);}}
+                        onTouchEnd={(event) => this.submitValue(event)}
                     />
                 </div>}
             </div>

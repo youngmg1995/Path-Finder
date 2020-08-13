@@ -1,24 +1,26 @@
 import React from 'react';
 import ControlPanel from './ControlPanel';
 import Canvas from './Canvas';
-import {onMouseDown, clearBoard, initializeCanvas} from '../utils/canvas-tools';
+import {onMouseDown, onTouchStart, clearBoard, initializeCanvas} from '../utils/canvas-tools';
 import {pathFinderAnimation} from '../utils/animations';
 
 class PathFinder extends React.Component {
     constructor(props) {
         super(props);
-        const { innerWidth: width, innerHeight: height } = window
+        let { innerWidth: width, innerHeight: height } = window
         // Setting Up Canvas
-        this.canvasHeight = height*.9-4;
-        this.canvasWidth = width;
+        let canvasHeight = height*.9-4;
+        let canvasWidth = width;
         this.canvasRef = React.createRef();
-        const s = 15;
-        let {board,startNode,targetNode,xUnits,yUnits,xOffset,yOffset,lineWidth} = initializeCanvas(this.canvasWidth,this.canvasHeight,s);
+        let s = 15;
+        let {board,startNode,targetNode,xUnits,yUnits,xOffset,yOffset,lineWidth} = initializeCanvas(canvasWidth,canvasHeight,s);
         // Setting Initial State
         this.state = {
             algorithm: 5,
             speed: 2,
             tool: 0,
+            canvasWidth: canvasWidth,
+            canvasHeight: canvasHeight,
             s: s,
             lineWidth: lineWidth,
             board: board,
@@ -61,6 +63,10 @@ class PathFinder extends React.Component {
         onMouseDown(downEvent,this.state,this.canvasRef,(stateUpdate) => this.setState(stateUpdate));
     }
 
+    onTouchStart(startEvent) {
+        onTouchStart(startEvent,this.state,this.canvasRef,(stateUpdate) => this.setState(stateUpdate));
+    }
+
     clearBoard(id) {
         if (this.state.running) return;
         clearBoard(id,this.canvasRef,this.state,(stateUpdate) => this.setState(stateUpdate));
@@ -71,7 +77,7 @@ class PathFinder extends React.Component {
         this.setState((prevState) => {
             return Object.assign(
                 {}, 
-                initializeCanvas(this.canvasWidth,this.canvasHeight,s),
+                initializeCanvas(prevState.canvasWidth,prevState.canvasHeight,s),
                 {updateID: prevState.updateID + 1, canvasUpdates: [], s:s}
             );
         });
@@ -90,16 +96,17 @@ class PathFinder extends React.Component {
                 <Canvas
                     className="canvas"
                     canvasRef={this.canvasRef}
-                    width={this.canvasWidth}
-                    height={this.canvasHeight}
+                    width={this.state.canvasWidth}
+                    height={this.state.canvasHeight}
                     s={this.state.s}
                     lineWidth={this.state.lineWidth}
                     xOffset={this.state.xOffset}
                     yOffset={this.state.yOffset}
                     canvasUpdates={this.state.canvasUpdates}
                     updateID={this.state.updateID}
-                    onMouseDown={(downEvent) => this.onMouseDown(downEvent)}
                     running={this.state.running}
+                    onMouseDown={(downEvent) => this.onMouseDown(downEvent)}
+                    onTouchStart={(startEvent) => this.onTouchStart(startEvent)}
                 />
             </div>
         );

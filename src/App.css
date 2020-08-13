@@ -117,3 +117,8 @@
   cursor: default;
   cursor: pointer;
 }
+
+/* Prevent scrolling */
+.App {
+  touch-action: none;
+}

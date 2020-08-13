@@ -31,7 +31,8 @@ class ControlPanel extends React.Component {
                         {id:1, title:'Path', selected:false, key:'clear'},
                         {id:2, title:'Walls', selected:false, key:'clear'},
                         {id:3, title:'Weights', selected:false, key:'clear'},
-                        {id:0, title:'Board', selected:false, key:'clear'}
+                        {id:0, title:'Board', selected:false, key:'clear'},
+                        {id:4, title:'Canvas', selected:false, key:'clear'}
             ]
         }
     }

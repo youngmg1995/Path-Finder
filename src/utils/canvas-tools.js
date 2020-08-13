@@ -1,7 +1,7 @@
 import {isSameNode, nodeOnBoard, findNeighbors, dotProduct, vectorOrthoMag} from './utils';
 
 //=====================================================================================//
-// Canvas MouseTracker for Drawing and Manipulating Board //
+// Canvas Mouse and Touch Trackers for Drawing and Manipulating Board //
 //=====================================================================================//
 function onMouseDown(downEvent,state,canvasRef,setState) {
     if (downEvent.button !== 0) return;
@@ -53,7 +53,62 @@ function onMouseDown(downEvent,state,canvasRef,setState) {
         }
     };
     canvas.addEventListener("mousemove", move);
-}
+};
+
+
+function onTouchStart(startEvent,state,canvasRef,setState) {
+    // scrolling prevented using CSS instead because I could not find a way to make event listener active
+    // startEvent.preventDefault();
+    let canvas = canvasRef.current;
+    let node = getPointerNode(startEvent.touches[0],canvas,state.s,state.xOffset,state.yOffset);
+    let origNode = node;
+    let onMove, onMoveType;
+    if (isSameNode(node,state.startNode)) {
+        onMove = (oldNode,newNode,s,lineWidth,xOffset,yOffset,canvasRef,state,setState) =>
+        moveStart(oldNode,newNode,s,lineWidth,xOffset,yOffset,canvasRef,state,setState);
+        onMoveType = 1;
+    } else if (isSameNode(node,state.targetNode)) {
+        onMove = (oldNode,newNode,s,lineWidth,xOffset,yOffset,canvasRef,state,setState) => 
+        moveTarget(oldNode,newNode,s,lineWidth,xOffset,yOffset,canvasRef,state,setState);
+        onMoveType = 2;
+    } else {
+        drawLine(node,node,state.s,state.lineWidth,state.xOffset,state.yOffset,canvasRef,state,
+            (stateUpdate) => setState(stateUpdate),state.xUnits,state.yUnits);
+        onMove = (startNode,endNode,s,lineWidth,xOffset,yOffset,canvasRef,state,setState,xUnits,yUnits) => 
+        drawLine(startNode,endNode,s,lineWidth,xOffset,yOffset,canvasRef,state,setState,xUnits,yUnits);
+        onMoveType = 0;
+    }
+    let move = (moveEvent) => {
+        let newNode = getPointerNode(moveEvent.touches[0],canvas,state.s,state.xOffset,state.yOffset);
+        if (isSameNode(newNode,node)) return;
+        if ( 
+                (onMoveType !== 0 && !nodeOnBoard(newNode,state.xUnits,state.yUnits))
+            ||  (onMoveType === 1 && isSameNode(newNode,state.targetNode))
+            ||  (onMoveType === 2 && isSameNode(newNode,state.startNode))
+        ) return;
+        onMove(node,newNode,state.s,state.lineWidth,state.xOffset,state.yOffset,canvasRef,state,
+            (stateUpdate) => setState(stateUpdate),state.xUnits,state.yUnits);
+        node = newNode;
+    };
+    let end = (endEvent) => {
+        canvas.removeEventListener("touchmove", move);
+        canvas.removeEventListener("touchend", end);
+        let board = {};
+        if (onMoveType === 1) {
+            let oldStart = {[[origNode.i,origNode.j]]: {node:origNode,type:'empty',fill:'white',object:null}};
+            let newStart = {[[node.i,node.j]]: {node:node,type:'start',fill:'white',object:'start'}};
+            Object.assign(board, state.board, oldStart, newStart);
+            setState({board:board});
+        } else if (onMoveType === 2) {
+            let oldTarget = {[[origNode.i,origNode.j]]: {node:origNode,type:'empty',fill:'white',object:null}};
+            let newTarget = {[[node.i,node.j]]: {node:node,type:'target',fill:'white',object:'target'}};
+            Object.assign(board, state.board, oldTarget, newTarget);
+            setState({board:board});
+        }
+    }
+    canvas.addEventListener("touchmove", move);
+    canvas.addEventListener("touchend", end);
+};
 
 //=====================================================================================//
 // Canvas Tools //
@@ -169,7 +224,31 @@ function clearBoard(id,canvasRef,state,setState) {
                         updateID: prevState.updateID + 1
             };
         });
-    // Not sure if this works yet
+    } else if (id === 4) {
+        let canvas = canvasRef.current;
+        let cx = canvas.getContext('2d');
+        cx.clearRect(0,0,canvas.width,canvas.height);
+        let { innerWidth: width, innerHeight: height } = window
+        let canvasHeight = height*.9-4;
+        let canvasWidth = width;
+        //let [board, startNode, targetNode] = initializeBoard(canvasWidth, canvasHeight, state.s);
+        let {board,startNode,targetNode,xUnits,yUnits,xOffset,yOffset} = initializeCanvas(canvasWidth,canvasHeight,state.s);
+        // Setting Initial State
+        setState((prevState) => {
+            return {
+                canvasWidth: canvasWidth,
+                canvasHeight: canvasHeight,
+                board: board,
+                startNode: startNode,
+                targetNode: targetNode,
+                xUnits: xUnits,
+                yUnits: yUnits,
+                xOffset: xOffset,
+                yOffset: yOffset,
+                canvasUpdates: board,
+                updateID: prevState.updateID + 1
+            };
+        });
     } else {
         let canvasUpdates = {};
         if (id === 1) {
@@ -468,7 +547,7 @@ function parseKey(key) {
 //=====================================================================================//
 // Exports //
 //=====================================================================================//
-export {getPointerNode, onMouseDown}
+export {getPointerNode, onMouseDown, onTouchStart}
 export {drawSearch, drawLine, moveStart, moveTarget, clearBoard}
 export {drawWeight, drawStart, drawTarget, drawNode, drawHex, fillHex};
 export {sleep, calcHexCenter, nodeDistance, nearestHex, calcHexPath, calcUnits, initializeBoard, initializeCanvas, parseKey};
