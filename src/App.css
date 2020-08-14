@@ -1,124 +1,381 @@
+/*=========================================================================================================================================*/
+/* -0) Used for all Scenarios */
+/*=========================================================================================================================================*/
 * {
   margin: 0px;
 }
 
-.ControlPanel {
-  width: 100vw;
-  height: 10vh;
-  background-color: #282c34;
+/* Prevent scrolling, but allow pinch zoom*/
+.App {
+  touch-action: pinch-zoom;
 }
 
-.ControlPanel-column {
-  float: left;
-  width: calc(100% / 7);
-  height: 100%;
-  color: white;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+/* Prevent Select Highlighting */
+* {
+  -webkit-touch-callout: none;    /* iOS Safari */
+  -webkit-user-select: none;      /* Safari */
+  -khtml-user-select: none;       /* Konqueror HTML */
+  -moz-user-select: none;         /* Old versions of Firefox */
+  -ms-user-select: none;          /* Internet Explorer/Edge */
+  user-select: none;              /* Non-prefixed version, currently
+                                  supported by Chrome, Edge, Opera and Firefox */
 }
-
-.Dropdown, .SliderDropdown {
-  font-size: 3.5vh;
-}
-
-.Dropdown-header {
-  display: flex;
-  justify-content: center;
-}
-
-.Algorithm-Dropdown-list, .Speed-Dropdown-list, .Tool-Dropdown-list, .Clear-Dropdown-list, .SliderDropdown-list {
-  position: absolute;
-  top: 11vh;
-  border-radius: 1.5vh;
-  background-color: #282c34;
-  list-style-type: none;
-  padding: 1vh;
-  text-align: left;
-}
-
-.Algorithm-Dropdown-list {
-  width: 30vh;
-}
-
-.Speed-Dropdown-list {
-  width: 18vh;
-}
-
-.Tool-Dropdown-list {
-  width: 16vh;
-}
-
-.Clear-Dropdown-list {
-  width: 12vh;
-}
-
-.SliderDropdown-list {
-  width: 21vh;
-  height: 14vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.slider-text {
-  height: 100%;
-  width: 90%;
-  display: flex;
-  justify-content: center;
-  font-size: 9.5vh;
-}
-
-.slider
-{
-    writing-mode: bt-lr; /* IE */
-    -webkit-appearance: slider-vertical; /* WebKit */
-    width: 0%;
-    height: 95%;
-    padding: 0 10px;
-    transform: translate(0,0);
-}
-
-.Dropdown-list-item {
-  font-size: 2.5vh;
-  padding: 1vh;
-}
-
-.Dropdown-list-item:hover {
-  background-color: #2e8b57;
-  border-radius: 1vh;
-}
-
-.check {
-  float: right;
-}
-
-.Start-Button {
-  font-size: 3.5vh;
-  border: none;
-  color: white;
-  width: 60%;
-  height: 50%;
-  background-color: seagreen;
-  border-radius: 1.5vh;
-}
-
-.Stop-Button {
-  font-size: 3.5vh;
-  border: none;
-  color: white;
-  width: 60%;
-  height: 50%;
-  background-color: firebrick;
-  border-radius: 1.5vh;
-}
-
-.Dropdown:hover, .Start-Button:hover, .Stop-Button:hover {
+  
+.Dropdown:hover, .Play-Button:hover{
   cursor: default;
   cursor: pointer;
 }
 
-/* Prevent scrolling */
-.App {
-  touch-action: none;
+/*=========================================================================================================================================*/
+/* -1) Smallest Layout (Basically for mobile right side up)
+    - Screen is too small for people to reasonably use touch dropdowns and button
+    - Instead switch to control panel at the base with play button as well as toggle for dropdown menu
+*/
+/*=========================================================================================================================================*/
+@media (max-width:481px)  {
+  .ControlPanel {
+      width: 100vw;
+      height: 10vh;
+      background-color: #282c34;
+  }
+  
+  .ControlPanel-column {
+      position: absolute;
+      visibility: hidden;
+  }
+
+  .Play-Button-Wrapper {
+    float: right;
+    width: calc(100%/2 - 2.5vh);
+    height: 100%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding-right: 2.5vh;
+  }
+
+  .Play-Button {
+      color: white;
+      background-color: seagreen;
+      font-size: 3.5vh;
+      width: 12.5vh;
+      height: 6vh;
+      border-radius: 3vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+  }
+  .Play-Button:hover {
+      background-color: rgb(41, 177, 100);
+  }
+
+  .Bars-Wrapper {
+    float: left;
+    width: calc(100% / 2);
+    height: 100%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    color: white;
+    font-size: 5vh;
+  }
+
+  .bars {
+    padding-left: 2.5vh;
+  }
+}
+
+/*=========================================================================================================================================*/
+/* -2) Second Smallest Layout (Basically for mobile on its side)
+    - Screen is too small for people to reasonably use touch dropdowns and button
+    - Instead switch to control panel on the left with play button as well as toggle for dropdown menu
+*/
+/*=========================================================================================================================================*/
+@media (max-height:481px)  {
+  .ControlPanel {
+      width: 100vw;
+      height: 10vh;
+      background-color: #282c34;
+  }
+  
+  .ControlPanel-column {
+      position: absolute;
+      visibility: hidden;
+  }
+
+  .Play-Button-Wrapper {
+    float: right;
+    width: calc(100% / 6);
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .Play-Button {
+      color: white;
+      background-color: seagreen;
+      font-size: 3.5vh;
+      width: 12.5vh;
+      height: 6vh;
+      border-radius: 3vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+  }
+  .Play-Button:hover {
+      background-color: rgb(41, 177, 100);
+  }
+
+  .Bars-Wrapper {
+    float: left;
+    width: calc(100% / 12);
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-size: 5vh;
+  }
+}
+
+/*=========================================================================================================================================*/
+/* -3) Second Largest Layout
+  - For screens large enough to allow use of dropdowns via touch and click
+  - Screen is not quite wide enough (in terms of aspect ratio) to allow control panel dimensions to be controled relative to height
+      - Instead control panel dimensions relative to width
+*/
+/*=========================================================================================================================================*/
+
+@media (min-width:481px) and (min-height:481px) and (max-aspect-ratio:7/5) {
+  .ControlPanel {
+      width: 100vw;
+      height: 10vh;
+      background-color: #282c34;
+  }
+  
+  .ControlPanel-column, .Play-Button-Wrapper  {
+      float: left;
+      width: calc(100% / 6);
+      height: 100%;
+      color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+  }
+  
+  .Dropdown, .SliderDropdown {
+      font-size: calc(3.5vw *5/7);
+  }
+  
+  .Dropdown-header {
+      display: flex;
+      justify-content: center;
+  }
+  
+  .Algorithm-Dropdown-list, .Speed-Dropdown-list, .Tool-Dropdown-list, .Clear-Dropdown-list, .SliderDropdown-list {
+      position: absolute;
+      top: 11vh;
+      border-radius: calc(1.5vw *5/7);
+      background-color: #282c34;
+      list-style-type: none;
+      padding: calc(1vw *5/7);
+      text-align: left;
+  }
+  
+  .Algorithm-Dropdown-list {
+      width: calc(30vw *5/7);
+  }
+  
+  .Speed-Dropdown-list {
+      width: calc(18vw *5/7);
+  }
+  
+  .Tool-Dropdown-list {
+      width: calc(16vw *5/7);
+  }
+  
+  .Clear-Dropdown-list {
+      width: calc(12vw *5/7);
+  }
+  
+  .SliderDropdown-list {
+      width: calc(21vw *5/7);
+      height: calc(14vw *5/7);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+  }
+  
+  .slider-text {
+      height: 100%;
+      width: 90%;
+      display: flex;
+      justify-content: center;
+      font-size: calc(9.5vw *5/7);
+  }
+  
+  
+  .slider {
+      writing-mode: bt-lr; /* IE */
+      -webkit-appearance: slider-vertical; /* WebKit */
+      width: 0%;
+      height: 95%;
+      padding: 0 calc(1vw *5/7);
+      transform: translate(0,0);
+  }
+  
+  .Dropdown-list-item {
+      font-size: calc(2.5vw *5/7);
+      padding: calc(1vw *5/7);
+  }
+  
+  .Dropdown-list-item:hover {
+      background-color: #2e8b57;
+      border-radius: calc(1vw *5/7);
+  }
+  
+  .check {
+      float: right;
+  }
+
+  .Play-Button {
+      color: white;
+      background-color: seagreen;
+      font-size: calc(3.5vw *5/7);
+      width: calc(12.5vw *5/7);
+      height: calc(6vw *5/7);
+      border-radius: calc(3vw *5/7);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+  }
+  .Play-Button:hover {
+      background-color: rgb(41, 177, 100);
+  }
+
+  .Bars-Wrapper {
+    visibility: hidden;
+    position: absolute;
+  }
+}
+
+/*=========================================================================================================================================*/
+/* -4) Largest Layout
+    -For screens large enough to allow use of dropdowns via touch and click
+    -Screen is also wide enough (in terms of aspect ratio) to allow control panel dimensions to be controled relative to height
+*/
+/*=========================================================================================================================================*/
+@media (min-width:481px) and (min-height:481px) and (min-aspect-ratio:7/5) {
+  .ControlPanel {
+      width: 100vw;
+      height: 10vh;
+      background-color: #282c34;
+  }
+  
+  .ControlPanel-column, .Play-Button-Wrapper {
+      float: left;
+      width: calc(100% / 6);
+      height: 100%;
+      color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+  }
+  
+  .Dropdown, .SliderDropdown {
+      font-size: 3.5vh;
+  }
+  
+  .Dropdown-header {
+      display: flex;
+      justify-content: center;
+  }
+  
+  .Algorithm-Dropdown-list, .Speed-Dropdown-list, .Tool-Dropdown-list, .Clear-Dropdown-list, .SliderDropdown-list {
+      position: absolute;
+      top: 11vh;
+      border-radius: 1.5vh;
+      background-color: #282c34;
+      list-style-type: none;
+      padding: 1vh;
+      text-align: left;
+  }
+  
+  .Algorithm-Dropdown-list {
+      width: 30vh;
+  }
+  
+  .Speed-Dropdown-list {
+      width: 18vh;
+  }
+  
+  .Tool-Dropdown-list {
+      width: 16vh;
+  }
+  
+  .Clear-Dropdown-list {
+      width: 12vh;
+  }
+  
+  .SliderDropdown-list {
+      width: 21vh;
+      height: 14vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+  }
+  
+  .slider-text {
+      height: 100%;
+      width: 90%;
+      display: flex;
+      justify-content: center;
+      font-size: 9.5vh;
+  }
+  
+  
+  .slider {
+      writing-mode: bt-lr; /* IE */
+      -webkit-appearance: slider-vertical; /* WebKit */
+      width: 0%;
+      height: 95%;
+      padding: 0 1vh;
+      transform: translate(0,0);
+  }
+  
+  .Dropdown-list-item {
+      font-size: 2.5vh;
+      padding: 1vh;
+  }
+  
+  .Dropdown-list-item:hover {
+      background-color: rgb(46, 139, 87);
+      border-radius: 1vh;
+  }
+  
+  .check {
+      float: right;
+  }
+
+  .Play-Button {
+      color: white;
+      background-color: seagreen;
+      font-size: 3.5vh;
+      width: 12.5vh;
+      height: 6vh;
+      border-radius: 3vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+  }
+  
+  .Play-Button:hover {
+      background-color: rgb(41, 177, 100);
+  }
+
+  .Bars-Wrapper {
+    visibility: hidden;
+    position: absolute;
+  }
 }

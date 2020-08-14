@@ -86,7 +86,8 @@ class PathFinder extends React.Component {
     render() {
         return (
             <div className="PathFinder">
-                <ControlPanel 
+                <ControlPanel
+                    running={this.state.running} 
                     toggleSelected={(key,id) => this.toggleSelected(key,id)}
                     clearBoard={(id) => this.clearBoard(id)}
                     changeHexSize={(s) => this.changeHexSize(s)}

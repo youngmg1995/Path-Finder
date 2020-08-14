@@ -1,6 +1,8 @@
 import React from 'react';
 import Dropdown from './Dropdown';
 import SliderDropdown from './SliderDropdown';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEllipsisV, faBars, faPlay , faPause } from "@fortawesome/free-solid-svg-icons";
 
 class ControlPanel extends React.Component {
     constructor(props) {
@@ -53,6 +55,9 @@ class ControlPanel extends React.Component {
     render() {
         return (
             <div className="ControlPanel">
+                <div className="Bars-Wrapper">
+                    <FontAwesomeIcon className="bars" icon={faBars}/>
+                </div>
                 <div className="ControlPanel-column">
                     <Dropdown className="Algorithm-Dropdown"
                         title={'Algorithm'} 
@@ -87,15 +92,16 @@ class ControlPanel extends React.Component {
                         callBack = {(id,key,title) => this.props.clearBoard(id)}
                     />
                 </div>
-                <div className="ControlPanel-column">
-                    <button className="Start-Button" onClick={(clickEvent) => this.props.startSearch()}>
-                        Start
-                    </button>
-                </div>
-                <div className="ControlPanel-column">
-                    <button className="Stop-Button" onClick={(clickEvent) => this.props.stopSearch()}>
-                        Stop
-                    </button>
+                <div className="Play-Button-Wrapper">
+                    <div className="Play-Button" onClick={this.props.running
+                        ? (clickEvent) => this.props.stopSearch()
+                        : (clickEvent) => this.props.startSearch()
+                    }>
+                        {this.props.running
+                            ? <FontAwesomeIcon className="pause" icon={faPause}/>
+                            : <FontAwesomeIcon className="play" icon={faPlay}/>
+                        }
+                    </div>
                 </div>
             </div>
         );
