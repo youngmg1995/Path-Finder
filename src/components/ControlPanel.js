@@ -2,7 +2,7 @@ import React from 'react';
 import Dropdown from './Dropdown';
 import SliderDropdown from './SliderDropdown';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEllipsisV, faBars, faPlay , faPause } from "@fortawesome/free-solid-svg-icons";
+import { faPlay , faPause } from "@fortawesome/free-solid-svg-icons";
 
 class ControlPanel extends React.Component {
     constructor(props) {
@@ -55,9 +55,6 @@ class ControlPanel extends React.Component {
     render() {
         return (
             <div className="ControlPanel">
-                <div className="Bars-Wrapper">
-                    <FontAwesomeIcon className="bars" icon={faBars}/>
-                </div>
                 <div className="ControlPanel-column">
                     <Dropdown className="Algorithm-Dropdown"
                         title={'Algorithm'} 

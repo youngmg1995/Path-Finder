@@ -6,7 +6,7 @@
 }
 
 /* Prevent scrolling, but allow pinch zoom*/
-.App {
+canvas {
   touch-action: pinch-zoom;
 }
 
@@ -32,6 +32,7 @@
     - Instead switch to control panel at the base with play button as well as toggle for dropdown menu
 */
 /*=========================================================================================================================================*/
+/*
 @media (max-width:481px)  {
   .ControlPanel {
       width: 100vw;
@@ -84,6 +85,70 @@
     padding-left: 2.5vh;
   }
 }
+*/
+/* Trying Something New */
+/*=========================================================================================================================================*/
+/* -1) Smallest Layout (Basically for mobile right side up)
+    - Screen is too small for people to reasonably use touch dropdowns and button
+    - Instead switch to control panel at the base with play button as well as toggle for dropdown menu
+*/
+/*=========================================================================================================================================*/
+@media (max-width:481px)  {
+  .ControlPanel {
+      position: absolute;
+      top: 90vh;
+      width: 100vw;
+      height: 10vh;
+      background-color: white;
+  }
+  
+  .ControlPanel-column {
+      position: absolute;
+      visibility: hidden;
+  }
+
+  .Play-Button-Wrapper {
+    position: absolute;
+    width: 100vw;
+    height: 10vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .Play-Button {
+      color: white;
+      background-color: seagreen;
+      font-size: 3.5vh;
+      width: 12.5vh;
+      height: 6vh;
+      border-radius: 3vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+  }
+  .Play-Button:hover {
+      background-color: rgb(41, 177, 100);
+  }
+
+  .Bars-Wrapper {
+    width: 95vw;
+    height: 5vh;
+    color: #282c34;
+    font-size: 3.5vh;
+    margin-left: 2.5vw;
+    margin-right: 2.5vw;
+  }
+
+  .bars {
+    padding-right: 10vw;
+  }
+
+  .Algorithm-Text {
+    float: right;
+    padding-right: 2.5vw;
+  }
+}
 
 /*=========================================================================================================================================*/
 /* -2) Second Smallest Layout (Basically for mobile on its side)
@@ -91,7 +156,7 @@
     - Instead switch to control panel on the left with play button as well as toggle for dropdown menu
 */
 /*=========================================================================================================================================*/
-@media (max-height:481px)  {
+@media (max-height:481px) and (min-aspect-ratio:1/1) {
   .ControlPanel {
       width: 100vw;
       height: 10vh;
@@ -128,14 +193,19 @@
   }
 
   .Bars-Wrapper {
-    float: left;
-    width: calc(100% / 12);
-    height: 100%;
+    position: absolute;
+    height: 10vh;
     display: flex;
     justify-content: center;
     align-items: center;
     color: white;
     font-size: 5vh;
+    margin-left: 2.5vw;
+    margin-right: 2.5vw;
+  }
+
+  .bars {
+    padding-right: 5vw;
   }
 }
 

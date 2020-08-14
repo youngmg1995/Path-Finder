@@ -3,13 +3,17 @@ import ControlPanel from './ControlPanel';
 import Canvas from './Canvas';
 import {onMouseDown, onTouchStart, clearBoard, initializeCanvas} from '../utils/canvas-tools';
 import {pathFinderAnimation} from '../utils/animations';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faBars} from "@fortawesome/free-solid-svg-icons";
 
 class PathFinder extends React.Component {
     constructor(props) {
         super(props);
         let { innerWidth: width, innerHeight: height } = window
         // Setting Up Canvas
-        let canvasHeight = height*.9-4;
+        let canvasHeight;
+        if (width < 481) canvasHeight = height*.85;
+        else canvasHeight = height*.9-4;
         let canvasWidth = width;
         this.canvasRef = React.createRef();
         let s = 15;
@@ -84,8 +88,24 @@ class PathFinder extends React.Component {
     }
 
     render() {
+        const algorithmMap = {
+            0: "Depth-First Search",
+            1: "Breadth-First Search",
+            2: "Hill Climbing",
+            3: "Beam Search (\u03C9=2)",
+            4: "Best-First Search",
+            5: "Branch & Bound",
+            6: "A* Search"
+        };
+        const speedMap = {
+
+        };
         return (
             <div className="PathFinder">
+                <div className="Bars-Wrapper">
+                    <FontAwesomeIcon className="bars" icon={faBars}/>
+                    <div className="Algorithm-Text">{algorithmMap[1]}</div>
+                </div>
                 <ControlPanel
                     running={this.state.running} 
                     toggleSelected={(key,id) => this.toggleSelected(key,id)}
