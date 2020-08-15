@@ -40,7 +40,7 @@ canvas {
       height: 10vh;
       background-color: white;
   }
-  /*
+  
   .Controls-Wrapper {
       position: absolute;
       z-index: 1;
@@ -49,32 +49,9 @@ canvas {
       height:92vh;
       background-color: white;
       color: black;
-      display: flex;
-      flex-direction: column;
       align-items: center;
       overflow: auto;
   }
-  */
-  .Controls-Wrapper {
-    position: absolute;
-    z-index: 1;
-    top:-80vh;
-    width: 100vw;
-    height:92vh;
-    background-color: white;
-    color: black;
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-box-orient: vertical;
-    -webkit-box-direction: normal;
-        -ms-flex-direction: column;
-            flex-direction: column;
-    -webkit-box-align: center;
-        -ms-flex-align: center;
-            align-items: center;
-    overflow: auto;
-}
 
   .ControlPanel-column {
       display: flex;
