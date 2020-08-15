@@ -76,6 +76,7 @@ class PathFinder extends React.Component {
     }
 
     onMouseDown(downEvent) {
+        downEvent.preventDefault();
         onMouseDown(downEvent,this.state,this.canvasRef,(stateUpdate) => this.setState(stateUpdate));
     }
 
