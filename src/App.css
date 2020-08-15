@@ -50,7 +50,7 @@ canvas {
       background-color: white;
       color: black;
       align-items: center;
-      overflow: auto;
+      overflow: scroll;
   }
 
   .ControlPanel-column {
