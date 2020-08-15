@@ -40,7 +40,6 @@ class Canvas extends React.Component {
 
     updateNode(node,fill,object,angle) {
         if (fill) {
-            // need to fill white first if color = '#b7ff4ae8' since it is transparent
             drawNode(node, this.props.s, this.props.lineWidth, this.props.xOffset, this.props.yOffset, fill, this.props.canvasRef);
         }
         if (object) {

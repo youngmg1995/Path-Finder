@@ -76,11 +76,14 @@ class PathFinder extends React.Component {
     }
 
     onMouseDown(downEvent) {
-        downEvent.preventDefault();
         onMouseDown(downEvent,this.state,this.canvasRef,(stateUpdate) => this.setState(stateUpdate));
     }
 
     onTouchStart(startEvent) {
+        // This isn't working in Chrome. Chrome automatically sets scroll event to passive which dissallows preventDefault
+        // I could find a way to set event to active, so instead just disabling scroll for canvas in CSS.
+        // This however is leading to a bug where scroll gets re-enabled after user uses pinch zoom. No soultion found yet. 
+        startEvent.preventDefault();
         onTouchStart(startEvent,this.state,this.canvasRef,(stateUpdate) => this.setState(stateUpdate));
     }
 

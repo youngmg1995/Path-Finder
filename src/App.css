@@ -5,6 +5,11 @@
   margin: 0px;
 }
 
+/* Prevent scrolling, but allow pinch zoom*/
+canvas {
+  touch-action: pinch-zoom;
+}
+
 /* Prevent Select Highlighting */
 * {
   -webkit-touch-callout: none;    /* iOS Safari */
