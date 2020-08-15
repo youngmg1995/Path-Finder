@@ -1,6 +1,6 @@
 {
   "files": {
-    "main.css": "/Path-Finding-App/static/css/main.8946c815.chunk.css",
+    "main.css": "/Path-Finding-App/static/css/main.13e9435c.chunk.css",
     "main.js": "/Path-Finding-App/static/js/main.1aff41d2.chunk.js",
     "main.js.map": "/Path-Finding-App/static/js/main.1aff41d2.chunk.js.map",
     "runtime-main.js": "/Path-Finding-App/static/js/runtime-main.42eef939.js",
@@ -8,15 +8,15 @@
     "static/js/2.9aa96085.chunk.js": "/Path-Finding-App/static/js/2.9aa96085.chunk.js",
     "static/js/2.9aa96085.chunk.js.map": "/Path-Finding-App/static/js/2.9aa96085.chunk.js.map",
     "index.html": "/Path-Finding-App/index.html",
-    "precache-manifest.e5250b19a3313f49409fec9fb90d1ee6.js": "/Path-Finding-App/precache-manifest.e5250b19a3313f49409fec9fb90d1ee6.js",
+    "precache-manifest.c810bc7f2f6408212a7af2c1c3be422b.js": "/Path-Finding-App/precache-manifest.c810bc7f2f6408212a7af2c1c3be422b.js",
     "service-worker.js": "/Path-Finding-App/service-worker.js",
-    "static/css/main.8946c815.chunk.css.map": "/Path-Finding-App/static/css/main.8946c815.chunk.css.map",
+    "static/css/main.13e9435c.chunk.css.map": "/Path-Finding-App/static/css/main.13e9435c.chunk.css.map",
     "static/js/2.9aa96085.chunk.js.LICENSE.txt": "/Path-Finding-App/static/js/2.9aa96085.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.42eef939.js",
     "static/js/2.9aa96085.chunk.js",
-    "static/css/main.8946c815.chunk.css",
+    "static/css/main.13e9435c.chunk.css",
     "static/js/main.1aff41d2.chunk.js"
   ]
 }
