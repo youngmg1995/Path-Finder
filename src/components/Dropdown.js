@@ -35,12 +35,14 @@ class Dropdown extends React.Component {
         const {listOpen, headerTitle, options} = this.state;
         return (
             <div className="Dropdown">
-                <div className="Dropdown-header" onClick={() => this.toggleList()}>
-                    <div className="Dropdown-header-title">{headerTitle}</div>
-                    {listOpen
-                        ? <FontAwesomeIcon className="angle-up" icon={faAngleUp} size="lg" transform="right-8 down-1"/>
-                        : <FontAwesomeIcon className="angle-down" icon={faAngleDown} size="lg" transform="right-8 down-1"/>
-                    }
+                <div className="Dropdown-header-wrapper">
+                    <div className="Dropdown-header" onClick={() => this.toggleList()}>
+                        <div className="Dropdown-header-title">{headerTitle}</div>
+                        {listOpen
+                            ? <FontAwesomeIcon className="angle-up" icon={faAngleUp} size="lg" transform="down-1"/>
+                            : <FontAwesomeIcon className="angle-down" icon={faAngleDown} size="lg" transform="down-1"/>
+                        }
+                    </div>
                 </div>
                 {listOpen && <ul className={headerTitle+"-Dropdown-list"}>
                     {options.map((item) => (

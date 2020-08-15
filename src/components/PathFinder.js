@@ -10,9 +10,16 @@ class PathFinder extends React.Component {
     constructor(props) {
         super(props);
         let { innerWidth: width, innerHeight: height } = window
+        // Set Up Control Panel
+        let showControls;
+        if (width < 481 || height < 481) showControls = false;
+        else showControls = true;
         // Setting Up Canvas
         let canvasHeight;
-        if (width < 481) canvasHeight = height*.85;
+        if (width < 481 || height < 481)  {
+            if ( width > height) canvasHeight = height*.85;
+            else canvasHeight = height*.8;
+        }
         else canvasHeight = height*.9-4;
         let canvasWidth = width;
         this.canvasRef = React.createRef();
@@ -20,6 +27,7 @@ class PathFinder extends React.Component {
         let {board,startNode,targetNode,xUnits,yUnits,xOffset,yOffset,lineWidth} = initializeCanvas(canvasWidth,canvasHeight,s);
         // Setting Initial State
         this.state = {
+            showControls: showControls,
             algorithm: 5,
             speed: 2,
             tool: 0,
@@ -48,6 +56,10 @@ class PathFinder extends React.Component {
         } else {
             return;
         }
+    }
+
+    toggleControls() {
+    this.setState((prevState) => ({showControls: !prevState.showControls}));
     }
 
     startPathFinder() {
@@ -97,17 +109,16 @@ class PathFinder extends React.Component {
             5: "Branch & Bound",
             6: "A* Search"
         };
-        const speedMap = {
-
-        };
         return (
             <div className="PathFinder">
                 <div className="Bars-Wrapper">
-                    <FontAwesomeIcon className="bars" icon={faBars}/>
-                    <div className="Algorithm-Text">{algorithmMap[1]}</div>
+                    <FontAwesomeIcon className="bars" icon={faBars} onClick={(event) => this.toggleControls()}/>
+                    <div className="Algorithm-Text">{algorithmMap[this.state.algorithm]}</div>
                 </div>
                 <ControlPanel
-                    running={this.state.running} 
+                    showControls={this.state.showControls}
+                    running={this.state.running}
+                    hexSize={this.state.s}
                     toggleSelected={(key,id) => this.toggleSelected(key,id)}
                     clearBoard={(id) => this.clearBoard(id)}
                     changeHexSize={(s) => this.changeHexSize(s)}

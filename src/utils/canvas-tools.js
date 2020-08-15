@@ -230,10 +230,12 @@ function clearBoard(id,canvasRef,state,setState) {
         cx.clearRect(0,0,canvas.width,canvas.height);
         let { innerWidth: width, innerHeight: height } = window
         let canvasHeight;
-        if (width < 481) canvasHeight = height*.85 - 4;
+        if (width < 481 || height < 481)  {
+            if ( width > height) canvasHeight = height*.85;
+            else canvasHeight = height*.8;
+        }
         else canvasHeight = height*.9-4;
         let canvasWidth = width;
-        //let [board, startNode, targetNode] = initializeBoard(canvasWidth, canvasHeight, state.s);
         let {board,startNode,targetNode,xUnits,yUnits,xOffset,yOffset} = initializeCanvas(canvasWidth,canvasHeight,state.s);
         // Setting Initial State
         setState((prevState) => {

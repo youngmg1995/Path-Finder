@@ -9,7 +9,7 @@ class SliderDropdown extends React.Component {
         this.state = {
             listOpen: false,
             headerTitle: this.props.title,
-            value: 15
+            value: this.props.hexSize
         }
     }
 
@@ -44,12 +44,14 @@ class SliderDropdown extends React.Component {
     render() {
         return (
             <div className="Dropdown">
-                <div className="Dropdown-header" onClick={() => this.toggleList()}>
-                    <div className="Dropdown-header-title">{this.state.headerTitle}</div>
-                    {this.state.listOpen
-                        ? <FontAwesomeIcon className="angle-up" icon={faAngleUp} size="lg" transform="right-8 down-1"/>
-                        : <FontAwesomeIcon className="angle-down" icon={faAngleDown} size="lg" transform="right-8 down-1"/>
-                    }
+                <div className="Dropdown-header-wrapper">
+                    <div className="Dropdown-header" onClick={() => this.toggleList()}>
+                        <div className="Dropdown-header-title">{this.state.headerTitle}</div>
+                        {this.state.listOpen
+                            ? <FontAwesomeIcon className="angle-up" icon={faAngleUp} size="lg" transform="down-1"/>
+                            : <FontAwesomeIcon className="angle-down" icon={faAngleDown} size="lg" transform="down-1"/>
+                        }
+                    </div>
                 </div>
                 {this.state.listOpen && <div className={"SliderDropdown-list"}>
                     <div className="slider-text">{this.state.value}</div>
