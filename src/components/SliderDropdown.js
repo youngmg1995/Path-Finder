@@ -42,10 +42,15 @@ class SliderDropdown extends React.Component {
     }
 
     render() {
+        let backgroundColor, fontColor;
+        if (window.innerWidth < 481 || window.innerHeight < 481) {
+            if (this.state.listOpen) [ backgroundColor , fontColor ] = ['#27af62' , 'white' ];
+            else [ backgroundColor , fontColor ] = [ 'white' , 'black' ];
+        } else [ backgroundColor , fontColor ] = [ '#191414' , 'white' ];
         return (
             <div className="Dropdown">
                 <div className="Dropdown-header-wrapper">
-                    <div className="Dropdown-header" onClick={() => this.toggleList()}>
+                    <div className="Dropdown-header" onClick={() => this.toggleList()} style = {{backgroundColor: backgroundColor, color:fontColor}}>
                         <div className="Dropdown-header-title">{this.state.headerTitle}</div>
                         {this.state.listOpen
                             ? <FontAwesomeIcon className="angle-up" icon={faAngleUp} size="lg" transform="down-1"/>

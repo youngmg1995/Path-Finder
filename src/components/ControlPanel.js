@@ -56,46 +56,48 @@ class ControlPanel extends React.Component {
         return (
             <div className="ControlPanel">
                 {this.props.showControls &&
-                    <div className="Controls-Wrapper">
-                        <div className="ControlPanel-column">
-                            <Dropdown className="Algorithm-Dropdown"
-                                title={'Algorithm'} 
-                                options={this.state.algorithm}
-                                callBack = {(id,key,title) => this.toggleSelected(id,key,title)}
-                                disableOnClickOutside={(window.innerWidth < 481 || window.innerHeight < 481) && ( window.innerWidth < window.innerHeight)}
-                            />
-                        </div>
-                        <div className="ControlPanel-column"> 
-                            <Dropdown className="Speed-Dropdown"
-                                title={'Speed'} 
-                                options={this.state.speed}
-                                callBack = {(id,key,title) => this.toggleSelected(id,key,title)}
-                                disableOnClickOutside={(window.innerWidth < 481 || window.innerHeight < 481) && ( window.innerWidth < window.innerHeight)}
-                            />
-                        </div>
-                        <div className="ControlPanel-column">
-                            <Dropdown className="Tool-Dropdown"
-                                title={'Tool'} 
-                                options={this.state.tool}
-                                callBack = {(id,key,title) => this.toggleSelected(id,key,title)}
-                                disableOnClickOutside={(window.innerWidth < 481 || window.innerHeight < 481) && ( window.innerWidth < window.innerHeight)}
-                            />
-                        </div>
-                        <div className="ControlPanel-column">
-                            <SliderDropdown className="Hex-Size-Dropdown"
-                                title={'Hex Size'}
-                                hexSize={this.props.hexSize}
-                                callBack = {(s) => this.props.changeHexSize(s)}
-                                disableOnClickOutside={(window.innerWidth < 481 || window.innerHeight < 481) && ( window.innerWidth < window.innerHeight)}
-                            />
-                        </div>
-                        <div className="ControlPanel-column">
-                            <Dropdown className="Clear-Dropdown"
-                                title={'Clear'} 
-                                options={this.state.clear}
-                                callBack = {(id,key,title) => this.props.clearBoard(id)}
-                                disableOnClickOutside={(window.innerWidth < 481 || window.innerHeight < 481) && ( window.innerWidth < window.innerHeight)}
-                            />
+                    <div className="Controls-Wrapper-Background">
+                        <div className="Controls-Wrapper">
+                            <div className="ControlPanel-column">
+                                <Dropdown className="Algorithm-Dropdown"
+                                    title={'Algorithm'} 
+                                    options={this.state.algorithm}
+                                    callBack = {(id,key,title) => this.toggleSelected(id,key,title)}
+                                    disableOnClickOutside={(window.innerWidth < 481 || window.innerHeight < 481) && ( window.innerWidth < window.innerHeight)}
+                                />
+                            </div>
+                            <div className="ControlPanel-column"> 
+                                <Dropdown className="Speed-Dropdown"
+                                    title={'Speed'} 
+                                    options={this.state.speed}
+                                    callBack = {(id,key,title) => this.toggleSelected(id,key,title)}
+                                    disableOnClickOutside={(window.innerWidth < 481 || window.innerHeight < 481) && ( window.innerWidth < window.innerHeight)}
+                                />
+                            </div>
+                            <div className="ControlPanel-column">
+                                <Dropdown className="Tool-Dropdown"
+                                    title={'Tool'} 
+                                    options={this.state.tool}
+                                    callBack = {(id,key,title) => this.toggleSelected(id,key,title)}
+                                    disableOnClickOutside={(window.innerWidth < 481 || window.innerHeight < 481) && ( window.innerWidth < window.innerHeight)}
+                                />
+                            </div>
+                            <div className="ControlPanel-column">
+                                <SliderDropdown className="Hex-Size-Dropdown"
+                                    title={'Hex Size'}
+                                    hexSize={this.props.hexSize}
+                                    callBack = {(s) => this.props.changeHexSize(s)}
+                                    disableOnClickOutside={(window.innerWidth < 481 || window.innerHeight < 481) && ( window.innerWidth < window.innerHeight)}
+                                />
+                            </div>
+                            <div className="ControlPanel-column">
+                                <Dropdown className="Clear-Dropdown"
+                                    title={'Clear'} 
+                                    options={this.state.clear}
+                                    callBack = {(id,key,title) => this.props.clearBoard(id)}
+                                    disableOnClickOutside={(window.innerWidth < 481 || window.innerHeight < 481) && ( window.innerWidth < window.innerHeight)}
+                                />
+                            </div>
                         </div>
                     </div>
                 }
