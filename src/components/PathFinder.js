@@ -11,15 +11,12 @@ class PathFinder extends React.Component {
         super(props);
         let { innerWidth: width, innerHeight: height } = window
         // Set Up Control Panel
-        let showControls;
-        if (width < 481 || height < 481) showControls = false;
-        else showControls = true;
+        let windowState = this.getWindowState();
+        let showControls = {1:false,2:false,3:true}[windowState]
         // Setting Up Canvas
         let canvasHeight;
-        if (width < 481 || height < 481)  {
-            if ( width > height) canvasHeight = height*.85;
-            else canvasHeight = height*.8;
-        }
+        if (windowState === 1) canvasHeight = height*.8;
+        else if (windowState === 2) canvasHeight = height*.85;
         else canvasHeight = height*.9-4;
         let canvasWidth = width;
         this.canvasRef = React.createRef();
@@ -27,6 +24,7 @@ class PathFinder extends React.Component {
         let {board,startNode,targetNode,xUnits,yUnits,xOffset,yOffset,lineWidth} = initializeCanvas(canvasWidth,canvasHeight,s);
         // Setting Initial State
         this.state = {
+            windowState: this.getWindowState(),
             showControls: showControls,
             algorithm: 5,
             speed: 2,
@@ -48,6 +46,29 @@ class PathFinder extends React.Component {
         }
     }
 
+    componentDidMount() {
+        window.addEventListener('resize', (event) => this.handleResize());
+    }
+
+    handleResize() {
+        let windowState = this.getWindowState();
+        if (windowState !== this.state.windowState) {
+            if ((windowState === 1 || windowState === 2) && (this.state.windowState === 3)) {
+                this.setState({windowState:windowState, showControls:false});
+            } else if ((windowState === 3) && (this.state.windowState === 1 || this.state.windowState === 2)) {
+                this.setState({windowState:windowState, showControls:true});
+            } else this.setState({windowState:windowState});
+        }
+    }
+
+    getWindowState() {
+        let { innerWidth: width, innerHeight: height } = window;
+        if (width < 481 || height < 481)  {
+            if ( width > height) return 2;
+            else return 1;
+        } else return 3;
+    }
+
     toggleSelected(key,id) {
         if (key !== 'clear') {
             this.setState({
@@ -59,7 +80,7 @@ class PathFinder extends React.Component {
     }
 
     toggleControls() {
-    this.setState((prevState) => ({showControls: !prevState.showControls}));
+        this.setState((prevState) => ({showControls: !prevState.showControls}));
     }
 
     startPathFinder() {
@@ -93,7 +114,7 @@ class PathFinder extends React.Component {
     }
 
     changeHexSize(s) {
-        if (this.state.running) return;
+        if (this.state.running || s === this.state.s) return;
         this.setState((prevState) => {
             return Object.assign(
                 {}, 
@@ -120,6 +141,7 @@ class PathFinder extends React.Component {
                     <div className="Algorithm-Text">{algorithmMap[this.state.algorithm]}</div>
                 </div>
                 <ControlPanel
+                    windowState={this.state.windowState}
                     showControls={this.state.showControls}
                     running={this.state.running}
                     hexSize={this.state.s}

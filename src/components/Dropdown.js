@@ -34,7 +34,7 @@ class Dropdown extends React.Component {
     render() {
         const {listOpen, headerTitle, options} = this.state;
         let backgroundColor, fontColor;
-        if (window.innerWidth < 481 || window.innerHeight < 481) {
+        if (this.props.windowState === 1 || this.props.windowState === 2) {
             if (listOpen) [ backgroundColor , fontColor ] = ['#27af62' , 'white' ];
             else [ backgroundColor , fontColor ] = [ 'white' , 'black' ];
         } else [ backgroundColor , fontColor ] = [ '#191414' , 'white' ];
