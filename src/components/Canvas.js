@@ -1,5 +1,5 @@
 import React from 'react';
-import {initializeBoard, drawWeight, drawStart, drawTarget, drawNode} from '../utils/canvas-tools';
+import {initializeBoard, drawWeight, drawStart, drawStartPos, drawTarget, drawNode} from '../utils/canvas-tools';
 
 /*
 // To Do //
@@ -34,6 +34,10 @@ class Canvas extends React.Component {
             for (let key in this.props.canvasUpdates) {
                 let {node, fill, object, angle} = this.props.canvasUpdates[key];
                 this.updateNode(node, fill, object, angle);
+            }
+            if (this.props.startPosition) {
+                let {pos,angle} = this.props.startPosition;
+                drawStartPos(pos,this.props.s,this.props.canvasRef,angle);
             }
         }
     }

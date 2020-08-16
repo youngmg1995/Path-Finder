@@ -42,6 +42,7 @@ class PathFinder extends React.Component {
             yOffset: yOffset,
             running: false,
             canvasUpdates: [],
+            startPosition: false,
             updateID: 0
         }
     }
@@ -161,6 +162,7 @@ class PathFinder extends React.Component {
                     xOffset={this.state.xOffset}
                     yOffset={this.state.yOffset}
                     canvasUpdates={this.state.canvasUpdates}
+                    startPosition={this.state.startPosition}
                     updateID={this.state.updateID}
                     running={this.state.running}
                     onMouseDown={(downEvent) => this.onMouseDown(downEvent)}

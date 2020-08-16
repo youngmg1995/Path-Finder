@@ -114,6 +114,11 @@ function vectorOrthoMag(v,V) {
     return vectorMag(d);
 };
 
+function vectorAngle(v) {
+    let angle = Math.atan( v.y / v.x );
+    if (v.x < 0) angle += Math.PI;
+    return angle;
+};
 
 // Data Structures for Algorithms //
 //==================================//
@@ -171,5 +176,5 @@ class minHeap {
 // Exports //
 //=====================================================================================//
 export {isSameNode, nodeInPath, addNodes, nodeOnBoard, isValidNode, findNeighbors, manhattanDistance};      // node functions
-export {dotProduct, scalarProd, vectorDiff, vectorSum, vectorMag, vectorOrthoMag};                          // vector functions
+export {dotProduct, scalarProd, vectorDiff, vectorSum, vectorMag, vectorOrthoMag, vectorAngle};                          // vector functions
 export {minHeap};                                                                                           // algorithm data structures

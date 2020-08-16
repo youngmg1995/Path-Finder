@@ -264,6 +264,7 @@ function clearBoard(id,canvasRef,state,setState) {
                     Object.assign(canvasUpdates, {[[node.i,node.j]]: newState});
                 }
             }
+            Object.assign(canvasUpdates, {[[state.targetNode.i,state.targetNode.j]]: state.board[[state.targetNode.i,state.targetNode.j]]});
         } else if (id === 2) {
             for (let key in state.board) {
                 let currentState = state.board[key];
@@ -340,7 +341,7 @@ function drawWeight(node,s,lineWidth,xOffset,yOffset,canvasRef){
     cx.lineWidth = rw;
     cx.arc(ringCenter.x, ringCenter.y, r1, 0, 7);
     cx.stroke();
-}
+};
 
 function drawStart(startNode,s,xOffset,yOffset,canvasRef,angle) {
     let canvas = canvasRef.current;
@@ -366,6 +367,39 @@ function drawStart(startNode,s,xOffset,yOffset,canvasRef,angle) {
         }
     }
     let pos = calcHexCenter(startNode,s,xOffset,yOffset);
+    cx.fillStyle = 'black';
+    cx.beginPath();
+    cx.moveTo(pos.x + path[0].x, pos.y + path[0].y);
+    for (let i=1; i<path.length; i++) {
+        cx.lineTo(pos.x + path[i].x, pos.y + path[i].y);
+    }
+    cx.closePath();
+    cx.fill();
+};
+
+function drawStartPos(pos,s,canvasRef,angle) {
+    let canvas = canvasRef.current;
+    let cx = canvas.getContext('2d');
+    const r = .85;
+    const a = s*Math.sqrt(3)*r/2;
+    const b = a/1.3;
+    const c = a/2.6;
+    let path = [
+                { x:a    ,  y:0},
+                { x:-2*c ,  y:b},
+                { x:-c   ,  y:0},
+                { x:-2*c ,  y:-b}
+    ];
+    if (angle) {
+        for (let i=0; i<path.length; i++) {
+            let oldPos = path[i];
+            let newPos = {
+                x: oldPos.x*Math.cos(angle) - oldPos.y*Math.sin(angle),
+                y: oldPos.x*Math.sin(angle) + oldPos.y*Math.cos(angle)
+            }
+            path[i] = newPos;
+        }
+    }
     cx.fillStyle = 'black';
     cx.beginPath();
     cx.moveTo(pos.x + path[0].x, pos.y + path[0].y);
@@ -553,5 +587,5 @@ function parseKey(key) {
 //=====================================================================================//
 export {getPointerNode, onMouseDown, onTouchStart}
 export {drawSearch, drawLine, moveStart, moveTarget, clearBoard}
-export {drawWeight, drawStart, drawTarget, drawNode, drawHex, fillHex};
+export {drawWeight, drawStart, drawStartPos, drawTarget, drawNode, drawHex, fillHex};
 export {sleep, calcHexCenter, nodeDistance, nearestHex, calcHexPath, calcUnits, initializeBoard, initializeCanvas, parseKey};
