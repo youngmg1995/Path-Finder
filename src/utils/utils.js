@@ -171,10 +171,19 @@ class minHeap {
     }
 };
 
+function shuffleArray(array) {
+    let arrayCopy = array.slice();
+    for (let i = arrayCopy.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [arrayCopy[i], arrayCopy[j]] = [arrayCopy[j], arrayCopy[i]];
+    }
+    return arrayCopy;
+};
+
 
 //=====================================================================================//
 // Exports //
 //=====================================================================================//
 export {isSameNode, nodeInPath, addNodes, nodeOnBoard, isValidNode, findNeighbors, manhattanDistance};      // node functions
 export {dotProduct, scalarProd, vectorDiff, vectorSum, vectorMag, vectorOrthoMag, vectorAngle};                          // vector functions
-export {minHeap};                                                                                           // algorithm data structures
+export {minHeap, shuffleArray};                                                                                           // algorithm data structures

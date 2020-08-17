@@ -1,8 +1,16 @@
-import {depthFirst, breadthFirst, hillClimbing, beamSearch, bestFirst, branchNBound, aStarSearch} from './algorithms';
+import {
+    depthFirst, breadthFirst, hillClimbing, beamSearch, bestFirst, branchNBound, aStarSearch,
+    depthFirstMaze
+} from './algorithms';
 import { calcHexCenter, nodeDistance } from './canvas-tools';
-import { scalarProd, vectorSum, vectorDiff, vectorAngle, isSameNode } from './utils';
+import { scalarProd, vectorSum, vectorDiff, vectorAngle } from './utils';
 
-// Constant mappings for speeds when animating search, drawPath, moveDownPath, and victory
+
+
+//=================================================================================================================================//
+// Constants //
+//=================================================================================================================================//
+// mappings for speeds when animating search, drawPath, moveDownPath, and victory
 const searchSpeed = {
     0: 10,
     1: 100,
@@ -25,14 +33,17 @@ const moveDownPathSpeed = {
     4: Infinity
 };
 const victorySpeed = {
-    0: 2*Math.PI,
+    0: 1.5*Math.PI,
     1: 2*Math.PI,
-    2: 6*Math.PI,
+    2: 3*Math.PI,
     3: 6*Math.PI,
     4: Infinity
 };
 
 
+//=================================================================================================================================//
+// Path-Finding Animations //
+//=================================================================================================================================//
 function pathFinderAnimation(state,canvasRef,setState,isRunning) {
     // Set state to running so user can't interfere with pathFinder 
     setState((prevState) => ({
@@ -207,7 +218,6 @@ function moveDownPathAnimation(path,s,xOffset,yOffset,speed,setState,isRunning) 
 };
 
 function victoryAnimation(targetNode,prevNode,speed,s,xOffset,yOffset,setState,isRunning) {
-    console.log('got to victory animation')
     const radiansPerSecond = victorySpeed[speed];
     const targetPos = calcHexCenter(targetNode,s,xOffset,yOffset);
     const startAngle = vectorAngle(nodeDistance(targetNode,prevNode,s,xOffset,yOffset));
@@ -220,8 +230,6 @@ function victoryAnimation(targetNode,prevNode,speed,s,xOffset,yOffset,setState,i
         } else {
             angle = startAngle + 6*Math.PI;
         }
-        //console.log(targetPos);
-        //console.log(angle);
         setState((prevState) => {
             return {
                         canvasUpdates: [ Object.assign({}, prevState.board[[targetNode.i,targetNode.j]]) ],
@@ -260,4 +268,31 @@ function victoryAnimation(targetNode,prevNode,speed,s,xOffset,yOffset,setState,i
     requestAnimationFrame(frame);
 };
 
-export {pathFinderAnimation};
+
+//=================================================================================================================================//
+// Maze-Drawing Animations //
+//=================================================================================================================================//
+function mazeAnimation(mazeID,state,setState) {
+    // Set state to running so user can't interfere with pathFinder 
+    setState((prevState) => ({
+        running: true, 
+        updateID: prevState.updateID + 1
+    }));
+    let mazeBuilder;
+    switch (mazeID) {
+        case 0: mazeBuilder = depthFirstMaze; break;
+        default: mazeBuilder = depthFirstMaze;
+    };
+    let mazePath = mazeBuilder(state.startNode,state.targetNode,state.xUnits,state.yUnits,state.board);
+    let pathUpdates = [];
+    for (let node of mazePath) {
+        pathUpdates.push(Object.assign({},{node:node, fill:'white'}));
+    }
+    setState((prevState) => ({
+        running:false,
+        canvasUpdates: pathUpdates,
+        updateID: prevState.updateID + 1
+    }));
+}
+
+export {pathFinderAnimation, mazeAnimation};

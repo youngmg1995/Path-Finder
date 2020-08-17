@@ -88,7 +88,7 @@ canvas {
       margin-right: 5vw;
   }
 
-  .Algorithm-Dropdown-list, .Speed-Dropdown-list, .Tool-Dropdown-list, .Clear-Dropdown-list {
+  .Algorithm-Dropdown-list, .Speed-Dropdown-list, .Tool-Dropdown-list, .Mazes-Dropdown-list, .Clear-Dropdown-list {
       font-size: 8vw;
       list-style-type: none;
   }
@@ -125,6 +125,10 @@ canvas {
 
   .SliderDropdown-list .Dropdown-list-item {
       width:90vw;
+  }
+
+  .Mazes-Dropdown-list .Dropdown-list-item {
+      margin-left: -40px;
   }
 
   .check {
@@ -237,7 +241,7 @@ canvas {
       transform: translateY(-1vh) rotate(-90deg);
   }
 
-  .Algorithm-Dropdown-list, .Speed-Dropdown-list, .Tool-Dropdown-list, .Clear-Dropdown-list {
+  .Algorithm-Dropdown-list, .Speed-Dropdown-list, .Tool-Dropdown-list, .Mazes-Dropdown-list, .Clear-Dropdown-list {
       font-size: 3.5vw;
       list-style-type: none;
       position: fixed;
@@ -250,6 +254,11 @@ canvas {
       flex-direction: column;
       align-items: center;
       padding-top: 4vh;
+  }
+
+  .Mazes-Dropdown-list {
+    text-align: center;
+    margin-left: -40px;
   }
 
   .Clear-Dropdown-list {
@@ -304,7 +313,7 @@ canvas {
 
   .Play-Button-Wrapper {
     float: right;
-    width: calc(100% / 6);
+    padding-right: 2.5vw;
     height: 100%;
     display: flex;
     justify-content: center;
@@ -348,7 +357,7 @@ canvas {
 */
 /*=========================================================================================================================================*/
 
-@media (min-width:481px) and (min-height:481px) and (max-aspect-ratio:7/5) {
+@media (min-width:481px) and (min-height:481px) and (max-aspect-ratio:8/5) {
   .ControlPanel {
       width: 100vw;
       height: 10vh;
@@ -357,7 +366,7 @@ canvas {
   
   .Controls-Wrapper {
     float: left;
-    width: calc(100% * 5/ 6);
+    width: calc(100% * 6/ 7);
     height: 10vh;
     color: white;
     display: flex;
@@ -367,7 +376,7 @@ canvas {
 
   .ControlPanel-column, .Play-Button-Wrapper {
       float: left;
-      width: calc(100% / 5);
+      width: calc(100% / 6);
       height: 100%;
       color: white;
       display: flex;
@@ -378,7 +387,7 @@ canvas {
   
   .Play-Button-Wrapper {
     float: left;
-    width: calc(100% / 6);
+    width: calc(100% / 7);
     height: 100%;
     color: white;
     display: flex;
@@ -387,7 +396,7 @@ canvas {
   }
   
   .Dropdown, .SliderDropdown {
-      font-size: calc(3.5vw *5/7);
+      font-size: calc(3.5vw *5/8);
   }
   
   .Dropdown-header {
@@ -396,48 +405,52 @@ canvas {
   }
 
   .Dropdown-header-title {
-      margin-right: calc(2vh * 5/7);
+      margin-right: calc(2vh * 5/8);
   }
   
-  .Algorithm-Dropdown-list, .Speed-Dropdown-list, .Tool-Dropdown-list, .Clear-Dropdown-list {
+  .Algorithm-Dropdown-list, .Speed-Dropdown-list, .Tool-Dropdown-list, .Mazes-Dropdown-list, .Clear-Dropdown-list {
       position: absolute;
       top: 11vh;
-      border-radius: calc(1.5vw *5/7);
+      border-radius: calc(1.5vw *5/8);
       background-color: #191414;
       list-style-type: none;
-      padding: calc(1vw *5/7);
+      padding: calc(1vw *5/8);
       text-align: left;
   }
   
   .Algorithm-Dropdown-list {
-      width: calc(30vw *5/7);
+      width: calc(30vw *5/8);
   }
   
   .Speed-Dropdown-list {
-      width: calc(18vw *5/7);
+      width: calc(18vw *5/8);
   }
   
   .Tool-Dropdown-list {
-      width: calc(16vw *5/7);
+      width: calc(16vw *5/8);
+  }
+  
+  .Mazes-Dropdown-list {
+      width: calc(30vw *5/8);
   }
   
   .Clear-Dropdown-list {
-      width: calc(12vw *5/7);
+      width: calc(12vw *5/8);
   }
   
   .SliderDropdown-list {
       position: absolute;
       top: 11vh;
-      width: calc(24vw * 5/7);
-      height: calc(16vw * 5/7);
-      border-radius: calc(1.5vw * 5/7);
+      width: calc(24vw * 5/8);
+      height: calc(16vw * 5/8);
+      border-radius: calc(1.5vw * 5/8);
       background-color: #191414;
-      padding-bottom: calc(1.5vw * 5/7);
+      padding-bottom: calc(1.5vw * 5/8);
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      font-size: calc(9.5vw * 5/7);
+      font-size: calc(9.5vw * 5/8);
   }
   
   .slider {
@@ -445,13 +458,13 @@ canvas {
   }
   
   .Dropdown-list-item {
-      font-size: calc(2.5vw *5/7);
-      padding: calc(1vw *5/7);
+      font-size: calc(2.5vw *5/8);
+      padding: calc(1vw *5/8);
   }
   
   .Dropdown-list-item:hover {
       background-color: #27af62;
-      border-radius: calc(1vw *5/7);
+      border-radius: calc(1vw *5/8);
   }
   
   .check {
@@ -461,10 +474,10 @@ canvas {
   .Play-Button {
       color: white;
       background-color: #27af62;
-      font-size: calc(3.5vw *5/7);
-      width: calc(12.5vw *5/7);
-      height: calc(6vw *5/7);
-      border-radius: calc(3vw *5/7);
+      font-size: calc(3.5vw *5/8);
+      width: calc(12.5vw *5/8);
+      height: calc(6vw *5/8);
+      border-radius: calc(3vw *5/8);
       display: flex;
       justify-content: center;
       align-items: center;
@@ -485,7 +498,7 @@ canvas {
     -Screen is also wide enough (in terms of aspect ratio) to allow control panel dimensions to be controled relative to height
 */
 /*=========================================================================================================================================*/
-@media (min-width:481px) and (min-height:481px) and (min-aspect-ratio:7/5) {
+@media (min-width:481px) and (min-height:481px) and (min-aspect-ratio:8/5) {
   .ControlPanel {
       width: 100vw;
       height: 10vh;
@@ -494,7 +507,7 @@ canvas {
   
   .Controls-Wrapper {
     float: left;
-    width: calc(100% * 5/ 6);
+    width: calc(100% * 6/ 7);
     height: 10vh;
     color: white;
     display: flex;
@@ -504,7 +517,7 @@ canvas {
 
   .ControlPanel-column, .Play-Button-Wrapper {
       float: left;
-      width: calc(100% / 5);
+      width: calc(100% / 6);
       height: 100%;
       color: white;
       display: flex;
@@ -515,7 +528,7 @@ canvas {
   
   .Play-Button-Wrapper {
     float: left;
-    width: calc(100% / 6);
+    width: calc(100% / 7);
     height: 100%;
     color: white;
     display: flex;
@@ -536,7 +549,7 @@ canvas {
       margin-right: 2vh;
   }
   
-  .Algorithm-Dropdown-list, .Speed-Dropdown-list, .Tool-Dropdown-list, .Clear-Dropdown-list {
+  .Algorithm-Dropdown-list, .Speed-Dropdown-list, .Tool-Dropdown-list, .Mazes-Dropdown-list, .Clear-Dropdown-list {
       position: absolute;
       top: 11vh;
       border-radius: 1.5vh;
@@ -556,6 +569,10 @@ canvas {
   
   .Tool-Dropdown-list {
       width: 16vh;
+  }
+  
+  .Mazes-Dropdown-list {
+      width: 30vh;
   }
   
   .Clear-Dropdown-list {

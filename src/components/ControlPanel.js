@@ -29,6 +29,9 @@ class ControlPanel extends React.Component {
                         {id:1, title:'Weights', selected:false, key:'tool'},
                         {id:2, title:'Eraser', selected:false, key:'tool'}
             ],
+            mazes: [
+                        {id:0, title:'Randomized Depth-First', selected:false, key:'mazes'}
+            ],
             clear: [
                         {id:1, title:'Path', selected:false, key:'clear'},
                         {id:2, title:'Walls', selected:false, key:'clear'},
@@ -91,6 +94,15 @@ class ControlPanel extends React.Component {
                                     title={'Hex Size'}
                                     hexSize={this.props.hexSize}
                                     callBack = {(s) => this.props.changeHexSize(s)}
+                                    disableOnClickOutside={this.props.windowState === 1}
+                                />
+                            </div>
+                            <div className="ControlPanel-column">
+                                <Dropdown className="Mazes-Dropdown"
+                                    windowState={this.props.windowState}
+                                    title={'Mazes'} 
+                                    options={this.state.mazes}
+                                    callBack = {(id,key,title) => this.props.drawMaze(id)}
                                     disableOnClickOutside={this.props.windowState === 1}
                                 />
                             </div>

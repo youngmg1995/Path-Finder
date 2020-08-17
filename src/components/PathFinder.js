@@ -1,8 +1,8 @@
 import React from 'react';
 import ControlPanel from './ControlPanel';
 import Canvas from './Canvas';
-import {onMouseDown, onTouchStart, clearBoard, initializeCanvas} from '../utils/canvas-tools';
-import {pathFinderAnimation} from '../utils/animations';
+import {onMouseDown, onTouchStart, clearBoard, doTheJohnWall, initializeCanvas} from '../utils/canvas-tools';
+import {pathFinderAnimation, mazeAnimation} from '../utils/animations';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars} from "@fortawesome/free-solid-svg-icons";
 
@@ -125,6 +125,11 @@ class PathFinder extends React.Component {
         });
     }
 
+    drawMaze(id) {
+        doTheJohnWall(this.state,(stateUpdate) => this.setState(stateUpdate));
+        mazeAnimation(id,this.state,(stateUpdate) => this.setState(stateUpdate));
+    }
+
     render() {
         const algorithmMap = {
             0: "Depth-First Search",
@@ -149,6 +154,7 @@ class PathFinder extends React.Component {
                     toggleSelected={(key,id) => this.toggleSelected(key,id)}
                     clearBoard={(id) => this.clearBoard(id)}
                     changeHexSize={(s) => this.changeHexSize(s)}
+                    drawMaze={(id) => this.drawMaze(id)}
                     startSearch={() => this.startPathFinder()}
                     stopSearch={() => this.stopPathFinder()}
                 />

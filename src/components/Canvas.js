@@ -50,7 +50,6 @@ class Canvas extends React.Component {
             if (object === 'weight') {
                 drawWeight(node, this.props.s, this.props.lineWidth, this.props.xOffset, this.props.yOffset, this.props.canvasRef);
             } else if (object === 'start') {
-                //console.log(angle);
                 drawStart(node, this.props.s, this.props.xOffset, this.props.yOffset, this.props.canvasRef,angle);
             } else if (object === 'target') {
                 drawTarget(node, this.props.s, this.props.lineWidth, this.props.xOffset, this.props.yOffset, this.props.canvasRef);
