@@ -1,4 +1,4 @@
-import {isSameNode, nodeOnBoard, findNeighbors, dotProduct, vectorOrthoMag} from './utils';
+import {isSameNode, nodeOnBoard, manhattanDistance, scalarProd, vectorSum, vectorDiff} from './utils';
 
 //=====================================================================================//
 // Canvas Mouse and Touch Trackers for Drawing and Manipulating Board //
@@ -57,8 +57,6 @@ function onMouseDown(downEvent,state,canvasRef,setState) {
 
 
 function onTouchStart(startEvent,state,canvasRef,setState) {
-    // scrolling prevented using CSS instead because I could not find a way to make event listener active
-    // startEvent.preventDefault();
     let canvas = canvasRef.current;
     let node = getPointerNode(startEvent.touches[0],canvas,state.s,state.xOffset,state.yOffset);
     let origNode = node;
@@ -113,6 +111,49 @@ function onTouchStart(startEvent,state,canvasRef,setState) {
 //=====================================================================================//
 // Canvas Tools //
 //=====================================================================================//
+function drawLine(startNode,endNode,s,lineWidth,xOffset,yOffset,canvasRef,state,setState,xUnits,yUnits) {
+    // Initialize object for storing updates to the canvas
+    let canvasUpdates = {};
+    // Get Manhatton Distance from startNode to endNode
+    const N = manhattanDistance(startNode,endNode);
+    //Get equation of line from startNode to endNode
+    const [ startPos , endPos ] = [ calcHexCenter(startNode,s,xOffset,yOffset) , calcHexCenter(endNode,s,xOffset,yOffset) ];
+    const V = vectorDiff(endPos,startPos);
+    const line = (n) => {
+        if (N === 0) return startPos;
+        else return vectorSum( scalarProd(n/N,V) , startPos );
+    }
+    // Sample N+1 points along line and fill in hexs these points lie in; however, break the loop if we go off the board
+    // Also don't fill in the node if it is the startNode or targetNode
+    for (let n = 0; n <= N; n++) {
+        const pos = line(n);
+        const node = nearestHex(pos,s,xOffset,yOffset);
+        //console.log(n);
+        //console.log(pos);
+        //console.log(node);
+        if (!nodeOnBoard(node,xUnits,yUnits)) break;
+        if (isSameNode(node,state.startNode) || isSameNode(node,state.targetNode)) continue;
+        // Fill in hex according to selected tool
+        if (state.tool === 0 && state.board[[node.i,node.j]].type !== 'wall') {
+            Object.assign(canvasUpdates, {[[node.i,node.j]]: {node:node,type:'wall',fill:'#282c34',object:null,angle:null}});
+        } else if (state.tool === 1 && state.board[[node.i,node.j]].type !== 'weight') {
+            Object.assign(canvasUpdates, {[[node.i,node.j]]: {node:node,type:'weight',fill:'white',object:'weight',angle:null}});
+        } else if (state.tool === 2 && state.board[[node.i,node.j]].type !== 'empty') {
+            Object.assign(canvasUpdates, {[[node.i,node.j]]: {node:node,type:'empty',fill:'white',object:null,angle:null}});
+        }
+    }
+    // Update state
+    setState((prevState) => {
+        return {
+                    board: Object.assign({},prevState.board,canvasUpdates),
+                    updateID: prevState.updateID + 1,
+                    canvasUpdates: canvasUpdates
+        }
+    });
+};
+
+// Old drawLine. Not quite as efficient as new one, or easy to understand
+/*
 function drawLine(startNode,endNode,s,lineWidth,xOffset,yOffset,canvasRef,state,setState,xUnits,yUnits) {
     // Setting start of path
     let currentNode = startNode;
@@ -172,6 +213,7 @@ function drawLine(startNode,endNode,s,lineWidth,xOffset,yOffset,canvasRef,state,
         }
     });
 };
+*/
 
 function moveStart(oldNode,newNode,s,lineWidth,xOffset,yOffset,canvasRef,state,setState) {
     let angle = 0;

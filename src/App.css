@@ -247,7 +247,7 @@ canvas {
       position: fixed;
       top: 15vh;
       left: 50vw;
-      height: 85vh;
+      height: 81vh;
       width: 50vw;
       overflow: scroll;
       display: flex;
@@ -288,7 +288,6 @@ canvas {
       padding-top: 1.75vw;
       padding-bottom: 1.75vw;
   }
-
 
   .Algorithm-Dropdown-list .Dropdown-list-item {
       width:40vw;
