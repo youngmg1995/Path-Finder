@@ -30,7 +30,13 @@ class ControlPanel extends React.Component {
                         {id:2, title:'Eraser', selected:false, key:'tool'}
             ],
             mazes: [
-                        {id:0, title:'Randomized Depth-First', selected:false, key:'mazes'}
+                        {id:0, title:'Random Walls', selected:false, key:'mazes'},
+                        {id:1, title:'Random Weights', selected:false, key:'mazes'},
+                        {id:2, title:'Depth-First Maze', selected:false, key:'mazes'},
+                        {id:3, title:'Breadth-First Maze', selected:false, key:'mazes'},
+                        {id:4, title:"Hunt & Kill Maze", selected:false, key:'mazes'},
+                        {id:5, title:"Prim's Maze", selected:false, key:'mazes'},
+                        {id:6, title:"Kruskal's Maze", selected:false, key:'mazes'}
             ],
             clear: [
                         {id:1, title:'Path', selected:false, key:'clear'},

@@ -171,6 +171,45 @@ class minHeap {
     }
 };
 
+class disjointSet {
+    constructor() {
+        this.dictionary = {};
+    }
+
+    makeSet(x) {
+        if (this.dictionary.hasOwnProperty(x)) return;
+        else {
+            this.dictionary[x] = {
+                parent: x,
+                size: 1
+            }
+        }
+    }
+
+    find(y) {
+        // using path splitting to improve performance
+        let x = y;
+        while (this.dictionary[x].parent !== x) {
+            let parent = this.dictionary[x].parent;
+            let grandparent = this.dictionary[parent].parent;
+            [ x , this.dictionary[x].parent ] = [ parent , grandparent ];
+        }
+        return x;
+    }
+
+    union(x,y) {
+        // using size, again to improve performance
+        let xRoot = this.find(x);
+        let yRoot = this.find(y);
+        if (xRoot === yRoot) return;
+        if (this.dictionary[xRoot].size < this.dictionary[yRoot]) {
+            [ xRoot , yRoot ] = [ yRoot , xRoot ];
+        }
+        this.dictionary[yRoot].parent = xRoot;
+        this.dictionary[xRoot].size += this.dictionary[yRoot].size;
+    }
+};
+
 function shuffleArray(array) {
     let arrayCopy = array.slice();
     for (let i = arrayCopy.length - 1; i > 0; i--) {
@@ -185,5 +224,5 @@ function shuffleArray(array) {
 // Exports //
 //=====================================================================================//
 export {isSameNode, nodeInPath, addNodes, nodeOnBoard, isValidNode, findNeighbors, manhattanDistance};      // node functions
-export {dotProduct, scalarProd, vectorDiff, vectorSum, vectorMag, vectorOrthoMag, vectorAngle};                          // vector functions
-export {minHeap, shuffleArray};                                                                                           // algorithm data structures
+export {dotProduct, scalarProd, vectorDiff, vectorSum, vectorMag, vectorOrthoMag, vectorAngle};             // vector functions
+export {minHeap, disjointSet, shuffleArray};                                                                // algorithm data structures

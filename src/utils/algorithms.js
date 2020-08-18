@@ -1,4 +1,5 @@
-import {isSameNode, nodeOnBoard, isValidNode, findNeighbors, manhattanDistance, minHeap, shuffleArray} from './utils';
+import {isSameNode, nodeOnBoard, isValidNode, findNeighbors, manhattanDistance, minHeap, shuffleArray, disjointSet} from './utils';
+import { parseKey } from './canvas-tools';
 
 
 //=================================================================================================================================//
@@ -300,6 +301,36 @@ function aStarSearch(startNode,targetNode,xUnits,yUnits,board) {
 //=================================================================================================================================//
 // Maze Building Algorithms //
 //=================================================================================================================================//
+function randomWalls(startNode,targetNode,xUnits,yUnits,board) {
+    // initialize array to keep track of path for drawing maze
+    let mazePath = [];
+    // iterate over whole board and randomly generate walls (with P(wall) = .50)
+    for (let key in board) {
+        let node = parseKey(key);
+        if (isSameNode(node,startNode) || isSameNode(node,targetNode)) continue;
+        if (Math.random() < .45) {
+            mazePath.push({node:node, type:'wall', fill:'#282c34'})
+        }
+    }
+    // return path used to build the maze for animations
+    return mazePath;
+};
+
+function randomWeights(startNode,targetNode,xUnits,yUnits,board) {
+    // initialize array to keep track of path for drawing maze
+    let mazePath = [];
+    // iterate over whole board and randomly generate walls (with P(wall) = .50)
+    for (let key in board) {
+        let node = parseKey(key);
+        if (isSameNode(node,startNode) || isSameNode(node,targetNode)) continue;
+        if (Math.random() < .45) {
+            mazePath.push({node:node, type:'weight', fill:'white', object:'weight'})
+        }
+    }
+    // return path used to build the maze for animations
+    return mazePath;
+};
+
 function depthFirstMaze(startNode,targetNode,xUnits,yUnits,board) {
     // initialize dictionary of nodes that keeps track of how many times each one was visited
     // each time we check the node, add 1, and if we extend the node set to Infinity
@@ -314,7 +345,6 @@ function depthFirstMaze(startNode,targetNode,xUnits,yUnits,board) {
     // initialize array to keep track of path for drawing maze
     let mazePath = [];
     // iteratively extend path until no more paths are left in the queue
-    //let i = 0;
     while (queue.length > 0) {
         // move to next node on the queue
         const currentNode = queue.shift();
@@ -322,7 +352,7 @@ function depthFirstMaze(startNode,targetNode,xUnits,yUnits,board) {
         // else we extend the node and update visitedNodes and mazePath
         if (visitedNodes[[currentNode.i,currentNode.j]] >= 2) continue;
         visitedNodes[[currentNode.i,currentNode.j]] = Infinity;
-        mazePath.push(currentNode);
+        if (!isSameNode(currentNode,startNode) && !isSameNode(currentNode,targetNode)) mazePath.push({node:currentNode, type:'empty', fill:'white'});
         // find the node's neighbors
         let neighbors = findNeighbors(currentNode);
         // filter to nodes on the board that have not already been extended or checked twice
@@ -338,15 +368,205 @@ function depthFirstMaze(startNode,targetNode,xUnits,yUnits,board) {
             else nodesToAdd.push(node);
         }
         queue = nodesToAdd.concat(queue);
-        //i++;
-        //console.log(i);
-        //if (i >= 10) break;
     }
-    //console.log(mazePath);
+    // return path used to build the maze for animations
+    return mazePath;
+};
+
+function breadthFirstMaze(startNode,targetNode,xUnits,yUnits,board) {
+    // initialize dictionary of nodes that keeps track of how many times each one was visited
+    // each time we check the node, add 1, and if we extend the node set to Infinity
+    let visitedNodes = {};
+    for (let node in board) {
+        visitedNodes[node] = 0;
+    }
+    // pick starting point at random
+    let start = {i: Math.floor(Math.random()*xUnits) , j: Math.floor(Math.random()*yUnits)};
+    // initialize queue as array
+    let queue = [start];
+    // initialize array to keep track of path for drawing maze
+    let mazePath = [];
+    // iteratively extend path until no more paths are left in the queue
+    while (queue.length > 0) {
+        // move to next node on the queue
+        const currentNode = queue.shift();
+        // if the node has already been extended or checked twice, then remove from queue and continue
+        // else we extend the node and update visitedNodes and mazePath
+        if (visitedNodes[[currentNode.i,currentNode.j]] >= 2) continue;
+        visitedNodes[[currentNode.i,currentNode.j]] = Infinity;
+        if (!isSameNode(currentNode,startNode) && !isSameNode(currentNode,targetNode)) mazePath.push({node:currentNode, type:'empty', fill:'white'});
+        // find the node's neighbors
+        let neighbors = findNeighbors(currentNode);
+        // filter to nodes on the board that have not already been extended or checked twice
+        neighbors = neighbors.filter((node) => (nodeOnBoard(node,xUnits,yUnits) && (visitedNodes[[node.i,node.j]] < 2)));
+        // shuffle array to randomize order
+        neighbors = shuffleArray(neighbors);
+        // add new nodes to queue, putting them at the end unless they are the start or target node (this ensures the start and target always get
+        // extended immediately which preserves the perfect maze condition)
+        for (let node of neighbors) {
+            visitedNodes[[node.i,node.j]]++
+            if (isSameNode(node,startNode) || isSameNode(node,targetNode)) queue.unshift(node);
+            else queue.push(node);
+        }
+    }
+    // return path used to build the maze for animations
+    return mazePath;
+};
+
+function kruskalsMaze(startNode,targetNode,xUnits,yUnits,board) {
+    // initialize list of unvisited nodes which we will visit in a randomized order; however, start and target nodes will be placed at the front to ensure
+    // a perfect maze is generated
+    let unVisitedNodes = [];
+    for (let key in board) {
+        if (!isSameNode(parseKey(key),startNode) && !isSameNode(parseKey(key),targetNode)) unVisitedNodes.push(key);
+    }
+    unVisitedNodes = shuffleArray(unVisitedNodes);
+    unVisitedNodes.unshift(startNode.i+','+startNode.j);
+    unVisitedNodes.unshift(targetNode.i+','+targetNode.j);
+    // initialize set to keep track of nodes added to the path
+    let pathNodes = new Set();
+    // initialize disjoint set to keep track of the disjoint paths
+    let disjointPaths = new disjointSet();
+    // lastly initialize array for storing mazePath updates for animation
+    let mazePath = [];
+    // iteratively look at each node in unVisited nodes, checking to see if it can be added to the path
+    for (let currentNode of unVisitedNodes) {
+        // get neighboring nodes and convert node to string
+        let neighbors = findNeighbors(parseKey(currentNode)).map((node) => (node.i+','+node.j));
+        // filter to neighbors that are on the board and are part of a path
+        neighbors = neighbors.filter((node) => (nodeOnBoard(parseKey(node),xUnits,yUnits) && pathNodes.has(node)));
+        // get the roots of each of these neighbors
+        let roots = neighbors.map((node) => disjointPaths.find(node));
+        // get the unique roots
+        let rootsSet = new Set(roots);
+        // Condition below guarantees perfect maze, but would not guarantee all paths are joined (and thus not guarantee that there is a path from start to target)
+        //if (roots.length !== rootsSet.size) continue;
+        // Condition below guarantees all paths are joined, but does not guarantee a perfect maze
+        if (roots.length > 1 && rootsSet.size < 2) continue;
+        // else we make current node part of the pathNodes and union all the roots
+        pathNodes.add(currentNode);
+        if (!isSameNode(parseKey(currentNode),startNode) && !isSameNode(parseKey(currentNode),targetNode)) {
+            mazePath.push({node:parseKey(currentNode), type:'empty', fill:'white'});
+        }
+        disjointPaths.makeSet(currentNode);
+        for (let node of roots) {
+            disjointPaths.union(currentNode,node);
+        }
+    }
+    // return path used to build the maze for animations
+    return mazePath;
+}
+
+function primsMaze(startNode,targetNode,xUnits,yUnits,board) {
+    // initialize dictionary of nodes that keeps track of how many times each one was visited
+    // each time we check the node, add 1, and if we extend the node set to Infinity
+    let visitedNodes = {};
+    for (let node in board) {
+        visitedNodes[node] = 0;
+    }
+    // pick starting point at random
+    let start = {i: Math.floor(Math.random()*xUnits) , j: Math.floor(Math.random()*yUnits)};
+    // initialize queue as array and initialize values for keeping track of start and target nodes
+    let queue = [start];
+    let [ startFound , targetFound ] = [ false , false ];
+    // initialize array to keep track of path for drawing maze
+    let mazePath = [];
+    // iteratively extend path until no more paths are left in the queue
+    while (queue.length > 0) {
+        // move to random node on the queue, unless we have encountered the start or target node, in which case move to this node
+        // doing so ensures a perfect maze
+        let currentNode;
+        if (startFound) {
+            currentNode = queue.shift();
+            startFound = false;
+        }
+        else if (targetFound) {
+            currentNode = queue.shift();
+            targetFound = false;
+        } else {
+            const i = Math.floor(Math.random() * queue.length);
+            currentNode = queue[i];
+            queue = queue.slice(0,i).concat(queue.slice(i+1));
+        }
+        // if the node has already been extended or checked twice, then remove from queue and continue
+        // else we extend the node and update visitedNodes and mazePath
+        if (visitedNodes[[currentNode.i,currentNode.j]] >= 2) continue;
+        visitedNodes[[currentNode.i,currentNode.j]] = Infinity;
+        if (!isSameNode(currentNode,startNode) && !isSameNode(currentNode,targetNode)) mazePath.push({node:currentNode, type:'empty', fill:'white'});
+        // find the node's neighbors
+        let neighbors = findNeighbors(currentNode);
+        // filter to nodes on the board that have not already been extended or checked twice
+        neighbors = neighbors.filter((node) => (nodeOnBoard(node,xUnits,yUnits) && (visitedNodes[[node.i,node.j]] < 2)));
+        // add new nodes to queue, putting them at the end unless they are the start or target node (this ensures the start and target always get
+        // extended immediately which preserves the perfect maze condition)
+        for (let node of neighbors) {
+            visitedNodes[[node.i,node.j]]++
+            if (isSameNode(node,startNode)) {
+                queue.unshift(node);
+                startFound = true;
+            } else if (isSameNode(node,targetNode)) {
+                queue.unshift(node);
+                targetFound = true;
+            }
+            else queue.push(node);
+        }
+    }
+    // return path used to build the maze for animations
+    return mazePath;
+};
+
+function huntAndKill(startNode,targetNode,xUnits,yUnits,board) {
+    // initialize dictionary of nodes that keeps track of how many times each one was visited
+    // each time we check the node, add 1, and if we extend the node set to Infinity
+    let visitedNodes = {};
+    for (let node in board) {
+        visitedNodes[node] = 0;
+    }
+    // pick starting point at random
+    let start = {i: Math.floor(Math.random()*xUnits) , j: Math.floor(Math.random()*yUnits)};
+    // initialize queue as array and initialize variable to determine when to choose new random walk point
+    let queue = [start];
+    let newRandomWalk = false;
+    // initialize array to keep track of path for drawing maze
+    let mazePath = [];
+    // iteratively extend path until no more paths are left in the queue
+    while (queue.length > 0) {
+        // move to next node on the queue, unless we determined current path cannot be exteneded, in which case pick random node
+        let currentNode;
+        if (newRandomWalk) {
+            const i = Math.floor(Math.random() * queue.length);
+            currentNode = queue[i];
+            queue = queue.slice(0,i).concat(queue.slice(i+1));
+            newRandomWalk = false;
+        } else {
+            currentNode = queue.shift();
+        }
+        // if the node has already been extended or checked twice, then remove from queue and continue
+        // else we extend the node and update visitedNodes and mazePath
+        if (visitedNodes[[currentNode.i,currentNode.j]] >= 2) continue;
+        visitedNodes[[currentNode.i,currentNode.j]] = Infinity;
+        if (!isSameNode(currentNode,startNode) && !isSameNode(currentNode,targetNode)) mazePath.push({node:currentNode, type:'empty', fill:'white'});
+        // find the node's neighbors
+        let neighbors = findNeighbors(currentNode);
+        // filter to nodes on the board that have not already been extended or checked twice
+        neighbors = neighbors.filter((node) => (nodeOnBoard(node,xUnits,yUnits) && (visitedNodes[[node.i,node.j]] < 2)));
+        // shuffle array to randomize order
+        neighbors = shuffleArray(neighbors);
+        // initialize array for adding the new nodes to queue (this lets us control the order in case the start or target node are encountered
+        // since we want to immediately extend these nodes to ensure a perfect path)
+        let nodesToAdd = [];
+        for (let node of neighbors) {
+            visitedNodes[[node.i,node.j]]++
+            if (isSameNode(node,startNode) || isSameNode(node,targetNode)) nodesToAdd.unshift(node);
+            else nodesToAdd.push(node);
+        }
+        queue = nodesToAdd.concat(queue);
+        if (nodesToAdd.length === 0) newRandomWalk = true;
+    }
+    // return path used to build the maze for animations
     return mazePath;
 };
 
 
-
 export {depthFirst, breadthFirst, hillClimbing, beamSearch, bestFirst, branchNBound, aStarSearch};
-export {depthFirstMaze}
+export {randomWalls, randomWeights, depthFirstMaze, breadthFirstMaze, kruskalsMaze, primsMaze, huntAndKill}

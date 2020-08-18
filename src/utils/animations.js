@@ -1,6 +1,6 @@
 import {
     depthFirst, breadthFirst, hillClimbing, beamSearch, bestFirst, branchNBound, aStarSearch,
-    depthFirstMaze
+    randomWalls, randomWeights, depthFirstMaze, breadthFirstMaze, kruskalsMaze, primsMaze, huntAndKill
 } from './algorithms';
 import { calcHexCenter, nodeDistance } from './canvas-tools';
 import { scalarProd, vectorSum, vectorDiff, vectorAngle } from './utils';
@@ -10,7 +10,7 @@ import { scalarProd, vectorSum, vectorDiff, vectorAngle } from './utils';
 //=================================================================================================================================//
 // Constants //
 //=================================================================================================================================//
-// mappings for speeds when animating search, drawPath, moveDownPath, and victory
+// mappings for speeds when animating search, drawPath, moveDownPath, victory, and drawMaze
 const searchSpeed = {
     0: 10,
     1: 100,
@@ -37,6 +37,13 @@ const victorySpeed = {
     1: 2*Math.PI,
     2: 3*Math.PI,
     3: 6*Math.PI,
+    4: Infinity
+};
+const drawMazeSpeed = {
+    0: 6,
+    1: 6**2,
+    2: 6**3,
+    3: 6**4,
     4: Infinity
 };
 
@@ -100,7 +107,15 @@ function searchAnimation(path,searchUpdates,s,xOffset,yOffset,speed,board,setSta
             if (currentStart < totalHexs) {
                 requestAnimationFrame(frame);
             } else {
-                drawPathAnimation(path,s,xOffset,yOffset,speed,board,setState,isRunning);
+                if (path.length > 0) drawPathAnimation(path,s,xOffset,yOffset,speed,board,setState,isRunning);
+                else {
+                    setState((prevState) => ({
+                        running: false,
+                        updateID: prevState.updateID + 1,
+                        canvasUpdates: [],
+                        startPosition: false
+                    }));
+                }
             }
         }
     };
@@ -272,27 +287,70 @@ function victoryAnimation(targetNode,prevNode,speed,s,xOffset,yOffset,setState,i
 //=================================================================================================================================//
 // Maze-Drawing Animations //
 //=================================================================================================================================//
-function mazeAnimation(mazeID,state,setState) {
+function mazeAnimation(mazeID,state,setState,isRunning) {
     // Set state to running so user can't interfere with pathFinder 
     setState((prevState) => ({
         running: true, 
         updateID: prevState.updateID + 1
     }));
+    // Get path array of nodes to fill in for maze
     let mazeBuilder;
     switch (mazeID) {
-        case 0: mazeBuilder = depthFirstMaze; break;
+        case 0: mazeBuilder = randomWalls; break;
+        case 1: mazeBuilder = randomWeights; break;
+        case 2: mazeBuilder = depthFirstMaze; break;
+        case 3: mazeBuilder = breadthFirstMaze; break;
+        case 4: mazeBuilder = huntAndKill; break;
+        case 5: mazeBuilder = primsMaze; break;
+        case 6: mazeBuilder = kruskalsMaze; break;
         default: mazeBuilder = depthFirstMaze;
     };
     let mazePath = mazeBuilder(state.startNode,state.targetNode,state.xUnits,state.yUnits,state.board);
-    let pathUpdates = [];
-    for (let node of mazePath) {
-        pathUpdates.push(Object.assign({},{node:node, fill:'white'}));
-    }
-    setState((prevState) => ({
-        running:false,
-        canvasUpdates: pathUpdates,
-        updateID: prevState.updateID + 1
-    }));
-}
+    // Set up parameters for animation
+    let hexsPerSecond = drawMazeSpeed[state.speed];
+    let lastTime = null;
+    let currentStart = 0;
+    let steps = 0;
+    const totalHexs = mazePath.length;
+    function updateAnimation(start,steps) {
+        setState((prevState) => {
+            let canvasUpdates = mazePath.slice(start,start+steps);
+            let boardUpdates = {};
+            for (let update of canvasUpdates) {
+                Object.assign(boardUpdates,{[[update.node.i,update.node.j]]: update});
+            }
+            return {
+                        board: Object.assign({},prevState.board,boardUpdates),
+                        canvasUpdates: canvasUpdates,
+                        updateID: prevState.updateID +1
+            };
+        });
+    };
+    function frame(time) {
+        if (isRunning()) {
+            if (lastTime != null) {
+                steps = Math.floor(hexsPerSecond * (time - lastTime) / 1000);
+                if (steps > 0) {
+                    updateAnimation(currentStart,steps);
+                    currentStart += steps;
+                    lastTime = time;
+                }
+            } else {
+                lastTime = time;
+            }
+            if (currentStart < totalHexs) {
+                requestAnimationFrame(frame);
+            } else {
+                setState((prevState) => ({
+                    running: false,
+                    updateID: prevState.updateID + 1,
+                    canvasUpdates: [],
+                    startPosition: false
+                }));
+            }
+        }
+    };
+    requestAnimationFrame(frame);
+};
 
 export {pathFinderAnimation, mazeAnimation};

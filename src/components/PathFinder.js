@@ -126,8 +126,12 @@ class PathFinder extends React.Component {
     }
 
     drawMaze(id) {
-        doTheJohnWall(this.state,(stateUpdate) => this.setState(stateUpdate));
-        mazeAnimation(id,this.state,(stateUpdate) => this.setState(stateUpdate));
+        if (this.state.running) return;
+        const setState = (stateUpdate) => this.setState(stateUpdate);
+        const isRunning = () => {return this.state.running;};
+        if (id === 0 || id === 1) this.clearBoard(0);
+        else doTheJohnWall(this.state,setState);
+        mazeAnimation(id,this.state,setState,isRunning);
     }
 
     render() {
