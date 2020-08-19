@@ -596,10 +596,23 @@ function calcHexPath(pos, s) {
 };
 
 function calcUnits(canvasWidth, canvasHeight, s) {
+    /*
     const xUnits = Math.floor(canvasHeight/(1.5*s) - .5);
     const yUnits = Math.floor(canvasWidth/(s*Math.sqrt(3)) - .5);
     const xOffset = (canvasWidth - (yUnits + .5)*s*Math.sqrt(3))/2;
     const yOffset = (canvasHeight - (xUnits*1.5 + .5)*s)/2;
+    */
+    const xUnits = Math.max(Math.floor((canvasHeight - s/2)/(1.5*s)),1);
+    let yUnits, xOffset, yOffset;
+    if (xUnits === 1) {
+        yUnits = Math.floor(canvasWidth/(s*Math.sqrt(3)));
+        xOffset = (canvasWidth - yUnits*s*Math.sqrt(3))/2;
+        yOffset = (canvasHeight - xUnits*2*s)/2;
+    } else {
+        yUnits = Math.floor(canvasWidth/(s*Math.sqrt(3)) - .5);
+        xOffset = (canvasWidth - (yUnits + .5)*s*Math.sqrt(3))/2;
+        yOffset = (canvasHeight - (xUnits*1.5 + .5)*s)/2;
+    }    
     return [xUnits,yUnits,xOffset,yOffset];
 };
 
@@ -630,6 +643,7 @@ function initializeBoard(canvasWidth, canvasHeight, s) {
 
 function initializeCanvas(canvasWidth,canvasHeight,s) {
     let [xUnits,yUnits,xOffset,yOffset] = calcUnits(canvasWidth, canvasHeight, s);
+    console.log([xUnits,yUnits,xOffset,yOffset]);
     let [board, startNode, targetNode] = initializeBoard(canvasWidth, canvasHeight, s);
     let lineWidth = s/10;
     return {board,startNode,targetNode,xUnits,yUnits,xOffset,yOffset,lineWidth};

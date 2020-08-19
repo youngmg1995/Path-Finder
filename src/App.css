@@ -91,6 +91,7 @@ canvas {
   .Algorithm-Dropdown-list, .Speed-Dropdown-list, .Tool-Dropdown-list, .Mazes-Dropdown-list, .Clear-Dropdown-list {
       font-size: 8vw;
       list-style-type: none;
+      padding-right: 40px;
   }
 
   .SliderDropdown-list {
@@ -109,10 +110,12 @@ canvas {
   .Dropdown-list-item {
       padding-top: 2vw;
       padding-bottom: 2vw;
+      padding-left: 5vw;
+      padding-right: 5vw;
   }
 
   .Algorithm-Dropdown-list .Dropdown-list-item {
-      width:90vw;
+      width:85vw;
   }
 
   .Speed-Dropdown-list .Dropdown-list-item {
@@ -127,13 +130,14 @@ canvas {
       width:90vw;
   }
 
-  .Mazes-Dropdown-list .Dropdown-list-item {
-      margin-left: -40px;
+  .Mazes-Dropdown-list .Dropdown-list-item:active, .Clear-Dropdown-list .Dropdown-list-item:active {
+    background-color: #27af62;
+    color: white;
+    border-radius: 5vw;
   }
 
   .check {
       float: right;
-      margin-right: 5vw;
   }
 
   .Play-Button-Wrapper {
@@ -248,22 +252,13 @@ canvas {
       top: 15vh;
       left: 50vw;
       height: 81vh;
-      width: 50vw;
+      width: calc(50vw - 80px);
       overflow: scroll;
       display: flex;
       flex-direction: column;
       align-items: center;
       padding-top: 4vh;
-  }
-
-  .Mazes-Dropdown-list {
-    text-align: center;
-    margin-left: -40px;
-  }
-
-  .Clear-Dropdown-list {
-    text-align: center;
-    margin-left: -40px;
+      padding-right: 40px;
   }
 
   .SliderDropdown-list {
@@ -287,6 +282,8 @@ canvas {
   .Dropdown-list-item {
       padding-top: 1.75vw;
       padding-bottom: 1.75vw;
+      padding-left: 3.5vw;
+      padding-right: 3.5vw;
   }
 
   .Algorithm-Dropdown-list .Dropdown-list-item {
@@ -305,9 +302,14 @@ canvas {
       width:50vw;
   }
 
+  .Mazes-Dropdown-list .Dropdown-list-item:active, .Clear-Dropdown-list .Dropdown-list-item:active {
+      background-color: #27af62;
+      color: white;
+      border-radius: 2vw;
+  }
+
   .check {
       float: right;
-      margin-right: 2.5vw;
   }
 
   .Play-Button-Wrapper {
@@ -481,9 +483,6 @@ canvas {
       justify-content: center;
       align-items: center;
   }
-  .Play-Button:hover {
-      background-color: rgb(41, 177, 100);
-  }
 
   .Bars-Wrapper {
     visibility: hidden;
@@ -621,10 +620,6 @@ canvas {
       display: flex;
       justify-content: center;
       align-items: center;
-  }
-  
-  .Play-Button:hover {
-      background-color: rgb(41, 177, 100);
   }
 
   .Bars-Wrapper {

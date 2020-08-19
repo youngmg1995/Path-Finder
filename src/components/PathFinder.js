@@ -117,10 +117,26 @@ class PathFinder extends React.Component {
     changeHexSize(s) {
         if (this.state.running || s === this.state.s) return;
         this.setState((prevState) => {
+            // check that s is not too large
+            let hexSize;
+            console.log(s);
+            console.log(prevState.canvasWidth < prevState.canvasHeight);
+            console.log(prevState.canvasWidth);
+            console.log(prevState.canvasHeight);
+            console.log(prevState.canvasWidth > 1.5*Math.sqrt(3)*s && prevState.canvasHeight > 3.5*s);
+            console.log(prevState.canvasWidth > 2*Math.sqrt(3)*s && prevState.canvasHeight > 2*s);
+            if (prevState.canvasWidth < prevState.canvasHeight) {
+                if (prevState.canvasWidth > 1.5*Math.sqrt(3)*s && prevState.canvasHeight > 3.5*s) hexSize = s;
+                else hexSize = Math.min(prevState.canvasWidth/(1.5*Math.sqrt(3)),prevState.canvasHeight/(3.5));
+            } else {
+                if (prevState.canvasWidth > 2*Math.sqrt(3)*s && prevState.canvasHeight > 2*s) hexSize = s;
+                else hexSize = Math.min(prevState.canvasWidth/(2*Math.sqrt(3)),prevState.canvasHeight/(2));
+            }
+            console.log(hexSize);
             return Object.assign(
                 {}, 
-                initializeCanvas(prevState.canvasWidth,prevState.canvasHeight,s),
-                {updateID: prevState.updateID + 1, canvasUpdates: [], s:s}
+                initializeCanvas(prevState.canvasWidth,prevState.canvasHeight,hexSize),
+                {updateID: prevState.updateID + 1, canvasUpdates: [], s:hexSize}
             );
         });
     }
