@@ -1,7 +1,7 @@
 import React from 'react';
 import ControlPanel from './ControlPanel';
 import Canvas from './Canvas';
-import {onMouseDown, onTouchStart, clearBoard, doTheJohnWall, initializeCanvas} from '../utils/canvas-tools';
+import {onMouseDown, onTouchStart, clearBoard, doTheJohnWall, lightWeightBaby, initializeCanvas} from '../utils/canvas-tools';
 import {pathFinderAnimation, mazeAnimation} from '../utils/animations';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars} from "@fortawesome/free-solid-svg-icons";
@@ -119,12 +119,6 @@ class PathFinder extends React.Component {
         this.setState((prevState) => {
             // check that s is not too large
             let hexSize;
-            console.log(s);
-            console.log(prevState.canvasWidth < prevState.canvasHeight);
-            console.log(prevState.canvasWidth);
-            console.log(prevState.canvasHeight);
-            console.log(prevState.canvasWidth > 1.5*Math.sqrt(3)*s && prevState.canvasHeight > 3.5*s);
-            console.log(prevState.canvasWidth > 2*Math.sqrt(3)*s && prevState.canvasHeight > 2*s);
             if (prevState.canvasWidth < prevState.canvasHeight) {
                 if (prevState.canvasWidth > 1.5*Math.sqrt(3)*s && prevState.canvasHeight > 3.5*s) hexSize = s;
                 else hexSize = Math.min(prevState.canvasWidth/(1.5*Math.sqrt(3)),prevState.canvasHeight/(3.5));
@@ -132,7 +126,6 @@ class PathFinder extends React.Component {
                 if (prevState.canvasWidth > 2*Math.sqrt(3)*s && prevState.canvasHeight > 2*s) hexSize = s;
                 else hexSize = Math.min(prevState.canvasWidth/(2*Math.sqrt(3)),prevState.canvasHeight/(2));
             }
-            console.log(hexSize);
             return Object.assign(
                 {}, 
                 initializeCanvas(prevState.canvasWidth,prevState.canvasHeight,hexSize),
@@ -146,6 +139,7 @@ class PathFinder extends React.Component {
         const setState = (stateUpdate) => this.setState(stateUpdate);
         const isRunning = () => {return this.state.running;};
         if (id === 0 || id === 1) this.clearBoard(0);
+        else if (id === 7 || id === 8) lightWeightBaby(this.state,setState);
         else doTheJohnWall(this.state,setState);
         mazeAnimation(id,this.state,setState,isRunning);
     }

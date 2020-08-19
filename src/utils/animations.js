@@ -1,6 +1,6 @@
 import {
     depthFirst, breadthFirst, hillClimbing, beamSearch, bestFirst, branchNBound, aStarSearch,
-    randomWalls, randomWeights, depthFirstMaze, breadthFirstMaze, kruskalsMaze, primsMaze, huntAndKill
+    randomWalls, randomWeights, depthFirstMaze, breadthFirstMaze, kruskalsMaze, primsMaze, huntAndKill, randomDLA, wallDLA
 } from './algorithms';
 import { calcHexCenter, nodeDistance } from './canvas-tools';
 import { scalarProd, vectorSum, vectorDiff, vectorAngle } from './utils';
@@ -303,6 +303,8 @@ function mazeAnimation(mazeID,state,setState,isRunning) {
         case 4: mazeBuilder = huntAndKill; break;
         case 5: mazeBuilder = primsMaze; break;
         case 6: mazeBuilder = kruskalsMaze; break;
+        case 7: mazeBuilder = randomDLA; break;
+        case 8: mazeBuilder = wallDLA; break;
         default: mazeBuilder = depthFirstMaze;
     };
     let mazePath = mazeBuilder(state.startNode,state.targetNode,state.xUnits,state.yUnits,state.board);

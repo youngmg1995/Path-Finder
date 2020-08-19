@@ -259,6 +259,7 @@ canvas {
       align-items: center;
       padding-top: 4vh;
       padding-right: 40px;
+      background-color: white;
   }
 
   .SliderDropdown-list {
@@ -272,6 +273,7 @@ canvas {
       flex-direction: column;
       justify-content: center;
       align-items: center;
+      background-color: white;
   }
 
   .slider {

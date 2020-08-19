@@ -350,6 +350,22 @@ function doTheJohnWall(state,setState) {
                     updateID: prevState.updateID + 1
         };
     });
+};
+
+function lightWeightBaby(state,setState) {
+    let canvasUpdates = {};
+    for (let key in state.board) {
+        Object.assign(canvasUpdates, {[key]: {node:parseKey(key), type:'weight', fill:'white', object:'weight'}});
+    }
+    Object.assign(canvasUpdates, {[[state.startNode.i,state.startNode.j]]: state.board[[state.startNode.i,state.startNode.j]]});
+    Object.assign(canvasUpdates, {[[state.targetNode.i,state.targetNode.j]]: state.board[[state.targetNode.i,state.targetNode.j]]});
+    setState((prevState) => {
+        return {
+                    board: canvasUpdates, 
+                    canvasUpdates: canvasUpdates,
+                    updateID: prevState.updateID + 1
+        };
+    });
 }
 
 //=====================================================================================//
@@ -643,7 +659,6 @@ function initializeBoard(canvasWidth, canvasHeight, s) {
 
 function initializeCanvas(canvasWidth,canvasHeight,s) {
     let [xUnits,yUnits,xOffset,yOffset] = calcUnits(canvasWidth, canvasHeight, s);
-    console.log([xUnits,yUnits,xOffset,yOffset]);
     let [board, startNode, targetNode] = initializeBoard(canvasWidth, canvasHeight, s);
     let lineWidth = s/10;
     return {board,startNode,targetNode,xUnits,yUnits,xOffset,yOffset,lineWidth};
@@ -658,6 +673,6 @@ function parseKey(key) {
 // Exports //
 //=====================================================================================//
 export {getPointerNode, onMouseDown, onTouchStart}
-export {drawSearch, drawLine, moveStart, moveTarget, clearBoard, doTheJohnWall}
+export {drawSearch, drawLine, moveStart, moveTarget, clearBoard, doTheJohnWall, lightWeightBaby}
 export {drawWeight, drawStart, drawStartPos, drawTarget, drawNode, drawHex, fillHex};
 export {sleep, calcHexCenter, nodeDistance, nearestHex, calcHexPath, calcUnits, initializeBoard, initializeCanvas, parseKey};

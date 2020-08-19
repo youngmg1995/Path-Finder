@@ -14,6 +14,7 @@ class SliderDropdown extends React.Component {
     }
 
     handleClickOutside() {
+        if (this.props.windowState === 1) return;
         this.setState({
             listOpen: false
         });

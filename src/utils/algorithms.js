@@ -1,4 +1,7 @@
-import {isSameNode, nodeOnBoard, isValidNode, findNeighbors, manhattanDistance, minHeap, shuffleArray, disjointSet} from './utils';
+import {
+    isSameNode, nodeOnBoard, isValidNode, findNeighbors, manhattanDistance, minHeap, shuffleArray, getRandomNode,
+    getRandomWallNode, getRandomNeighbor, disjointSet
+} from './utils';
 import { parseKey } from './canvas-tools';
 
 
@@ -567,6 +570,71 @@ function huntAndKill(startNode,targetNode,xUnits,yUnits,board) {
     return mazePath;
 };
 
+function randomDLA(startNode,targetNode,xUnits,yUnits,board) {
+    // initialize sets for keeping track of nodes in the path and neighboring nodes to the path
+    let [ pathNodes , pathNeighbors ] = [ new Set() , new Set() ];
+    // initialize array for keeping track of canvas updates
+    let mazePath = [];
+    // initialize brownianNode that randomly drifts around the board, add it to pathNeighbors to esure it is the first node added to th path
+    let brownianNode = getRandomNode(xUnits,yUnits,pathNodes);
+    pathNeighbors.add(brownianNode);
+    // run loop that lets the brownianNode walk randomly around the board
+    while (pathNodes.size < (xUnits*yUnits)/8) {
+        // updates for when brownianNode comes into contact with path
+        if (pathNeighbors.has(brownianNode)) {
+            // add node to pathNodes and add neighbors to pathNeighbors
+            pathNodes.add(brownianNode);
+            let neighbors = findNeighbors(parseKey(brownianNode)).filter((node) => nodeOnBoard(node,xUnits,yUnits));
+            for (let neighbor of neighbors) {
+                pathNeighbors.add(neighbor.i+','+neighbor.j);
+            }
+            // add to canvas updates if it is not the start or target node
+            if (!isSameNode(parseKey(brownianNode),startNode) && !isSameNode(parseKey(brownianNode),targetNode)) {
+                mazePath.push({node:parseKey(brownianNode), type:'empty', fill:'white', object:null});
+            }
+            // set brownianNode to new random position
+            brownianNode = getRandomNode(xUnits,yUnits,pathNodes);
+        } else {
+            // let brownianNode walk to new neighbor at random
+            brownianNode = getRandomNeighbor(brownianNode,xUnits,yUnits);
+        }
+    }
+    // return path used to build the maze for animations
+    return mazePath;
+};
+function wallDLA(startNode,targetNode,xUnits,yUnits,board) {
+    // initialize sets for keeping track of nodes in the path and neighboring nodes to the path
+    let [ pathNodes , pathNeighbors ] = [ new Set() , new Set() ];
+    // initialize array for keeping track of canvas updates
+    let mazePath = [];
+    // initialize brownianNode that randomly drifts around the board, add it to pathNeighbors to esure it is the first node added to th path
+    let brownianNode = getRandomWallNode(xUnits,yUnits,pathNodes);
+    pathNeighbors.add(brownianNode);
+    // run loop that lets the brownianNode walk randomly around the board
+    while (pathNodes.size < (xUnits*yUnits)/6) {
+        // updates for when brownianNode comes into contact with path
+        if (pathNeighbors.has(brownianNode)) {
+            // add node to pathNodes and add neighbors to pathNeighbors
+            pathNodes.add(brownianNode);
+            let neighbors = findNeighbors(parseKey(brownianNode)).filter((node) => nodeOnBoard(node,xUnits,yUnits));
+            for (let neighbor of neighbors) {
+                pathNeighbors.add(neighbor.i+','+neighbor.j);
+            }
+            // add to canvas updates if it is not the start or target node
+            if (!isSameNode(parseKey(brownianNode),startNode) && !isSameNode(parseKey(brownianNode),targetNode)) {
+                mazePath.push({node:parseKey(brownianNode), type:'empty', fill:'white', object:null});
+            }
+            // set brownianNode to new random position
+            brownianNode = getRandomWallNode(xUnits,yUnits,pathNodes);
+        } else {
+            // let brownianNode walk to new neighbor at random
+            brownianNode = getRandomNeighbor(brownianNode,xUnits,yUnits);
+        }
+    }
+    // return path used to build the maze for animations
+    return mazePath;
+};
+
 
 export {depthFirst, breadthFirst, hillClimbing, beamSearch, bestFirst, branchNBound, aStarSearch};
-export {randomWalls, randomWeights, depthFirstMaze, breadthFirstMaze, kruskalsMaze, primsMaze, huntAndKill}
+export {randomWalls, randomWeights, depthFirstMaze, breadthFirstMaze, kruskalsMaze, primsMaze, huntAndKill, randomDLA, wallDLA}

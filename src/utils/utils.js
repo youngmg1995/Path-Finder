@@ -1,5 +1,8 @@
 //=====================================================================================//
 // Constants //
+
+import { parseKey } from "./canvas-tools";
+
 //=====================================================================================//
 const DIRECTIONS = {
     even: [
@@ -219,10 +222,45 @@ function shuffleArray(array) {
     return arrayCopy;
 };
 
+function getRandomNode(xUnits,yUnits,offLimitsSet) {
+    let randomNode;
+    do {
+        randomNode = Math.floor(Math.random()*xUnits)+','+Math.floor(Math.random()*yUnits);
+    } while (offLimitsSet.has(randomNode));
+    return randomNode;
+};
+
+function getRandomWallNode(xUnits,yUnits,offLimitsSet) {
+    let randomNode;
+    do {
+        if (Math.random() < .5) {
+            if (Math.random() < .5) {
+                randomNode = 0+','+Math.floor(Math.random()*yUnits);
+            } else {
+                randomNode = (xUnits-1)+','+Math.floor(Math.random()*yUnits);
+            }
+        } else {
+            if (Math.random() < .5) {
+                randomNode = Math.floor(Math.random()*xUnits)+','+0;
+            } else {
+                randomNode = Math.floor(Math.random()*xUnits)+','+(yUnits-1);
+            }
+        }
+    } while (offLimitsSet.has(randomNode));
+    return randomNode;
+};
+
+function getRandomNeighbor(node,xUnits,yUnits) {
+    let neighbors = findNeighbors(parseKey(node))
+                    .filter((node) => nodeOnBoard(node,xUnits,yUnits))
+                    .map((node) => (node.i+','+node.j));
+    return neighbors[Math.floor(Math.random()*neighbors.length)];
+};
+
 
 //=====================================================================================//
 // Exports //
 //=====================================================================================//
 export {isSameNode, nodeInPath, addNodes, nodeOnBoard, isValidNode, findNeighbors, manhattanDistance};      // node functions
 export {dotProduct, scalarProd, vectorDiff, vectorSum, vectorMag, vectorOrthoMag, vectorAngle};             // vector functions
-export {minHeap, disjointSet, shuffleArray};                                                                // algorithm data structures
+export {minHeap, disjointSet, shuffleArray, getRandomNode, getRandomWallNode, getRandomNeighbor};                              // algorithm data structures

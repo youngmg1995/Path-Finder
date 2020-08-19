@@ -36,7 +36,9 @@ class ControlPanel extends React.Component {
                         {id:3, title:'Breadth-First Maze', selected:false, key:'mazes'},
                         {id:4, title:"Hunt & Kill Maze", selected:false, key:'mazes'},
                         {id:5, title:"Prim's Maze", selected:false, key:'mazes'},
-                        {id:6, title:"Kruskal's Maze", selected:false, key:'mazes'}
+                        {id:6, title:"Kruskal's Maze", selected:false, key:'mazes'},
+                        {id:7, title:"Random DLA Fractal", selected:false, key:'mazes'},
+                        {id:8, title:"Wall DLA Fractal", selected:false, key:'mazes'}
             ],
             clear: [
                         {id:1, title:'Path', selected:false, key:'clear'},
@@ -73,7 +75,6 @@ class ControlPanel extends React.Component {
                                     title={'Algorithm'} 
                                     options={this.state.algorithm}
                                     callBack = {(id,key,title) => this.toggleSelected(id,key,title)}
-                                    disableOnClickOutside={this.props.windowState === 1}
                                 />
                             </div>
                             <div className="ControlPanel-column"> 
@@ -82,7 +83,6 @@ class ControlPanel extends React.Component {
                                     title={'Speed'} 
                                     options={this.state.speed}
                                     callBack = {(id,key,title) => this.toggleSelected(id,key,title)}
-                                    disableOnClickOutside={this.props.windowState === 1}
                                 />
                             </div>
                             <div className="ControlPanel-column">
@@ -91,7 +91,6 @@ class ControlPanel extends React.Component {
                                     title={'Tool'} 
                                     options={this.state.tool}
                                     callBack = {(id,key,title) => this.toggleSelected(id,key,title)}
-                                    disableOnClickOutside={this.props.windowState === 1}
                                 />
                             </div>
                             <div className="ControlPanel-column">
@@ -100,7 +99,6 @@ class ControlPanel extends React.Component {
                                     title={'Hex Size'}
                                     hexSize={this.props.hexSize}
                                     callBack = {(s) => this.props.changeHexSize(s)}
-                                    disableOnClickOutside={this.props.windowState === 1}
                                 />
                             </div>
                             <div className="ControlPanel-column">
@@ -109,7 +107,6 @@ class ControlPanel extends React.Component {
                                     title={'Mazes'} 
                                     options={this.state.mazes}
                                     callBack = {(id,key,title) => this.props.drawMaze(id)}
-                                    disableOnClickOutside={this.props.windowState === 1}
                                 />
                             </div>
                             <div className="ControlPanel-column">
@@ -118,7 +115,6 @@ class ControlPanel extends React.Component {
                                     title={'Clear'} 
                                     options={this.state.clear}
                                     callBack = {(id,key,title) => this.props.clearBoard(id)}
-                                    disableOnClickOutside={this.props.windowState === 1}
                                 />
                             </div>
                         </div>
