@@ -38,7 +38,9 @@ class ControlPanel extends React.Component {
                         {id:5, title:"Prim's Maze", selected:false, key:'mazes'},
                         {id:6, title:"Kruskal's Maze", selected:false, key:'mazes'},
                         {id:7, title:"Random DLA Fractal", selected:false, key:'mazes'},
-                        {id:8, title:"Wall DLA Fractal", selected:false, key:'mazes'}
+                        {id:8, title:"Wall DLA Fractal", selected:false, key:'mazes'},
+                        {id:9, title:"Cellular Caves", selected:false, key:'mazes'},
+                        {id:10, title:"Simplex Caves", selected:false, key:'mazes'}
             ],
             clear: [
                         {id:1, title:'Path', selected:false, key:'clear'},

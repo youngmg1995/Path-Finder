@@ -1,7 +1,7 @@
 import React from 'react';
 import ControlPanel from './ControlPanel';
 import Canvas from './Canvas';
-import {onMouseDown, onTouchStart, clearBoard, doTheJohnWall, lightWeightBaby, initializeCanvas} from '../utils/canvas-tools';
+import {onMouseDown, onTouchStart, clearBoard, initializeCanvas} from '../utils/canvas-tools';
 import {pathFinderAnimation, mazeAnimation} from '../utils/animations';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars} from "@fortawesome/free-solid-svg-icons";
@@ -138,9 +138,6 @@ class PathFinder extends React.Component {
         if (this.state.running) return;
         const setState = (stateUpdate) => this.setState(stateUpdate);
         const isRunning = () => {return this.state.running;};
-        if (id === 0 || id === 1) this.clearBoard(0);
-        else if (id === 7 || id === 8) lightWeightBaby(this.state,setState);
-        else doTheJohnWall(this.state,setState);
         mazeAnimation(id,this.state,setState,isRunning);
     }
 

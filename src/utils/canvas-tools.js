@@ -339,7 +339,7 @@ function clearBoard(id,canvasRef,state,setState) {
 function doTheJohnWall(state,setState) {
     let canvasUpdates = {};
     for (let key in state.board) {
-        Object.assign(canvasUpdates, {[key]: {node:parseKey(key), type:'wall', fill:'#282c34'}});
+        Object.assign(canvasUpdates, {[key]: {node:parseKey(key), type:'wall', fill:'#282c34', object:null}});
     }
     Object.assign(canvasUpdates, {[[state.startNode.i,state.startNode.j]]: state.board[[state.startNode.i,state.startNode.j]]});
     Object.assign(canvasUpdates, {[[state.targetNode.i,state.targetNode.j]]: state.board[[state.targetNode.i,state.targetNode.j]]});
@@ -366,7 +366,23 @@ function lightWeightBaby(state,setState) {
                     updateID: prevState.updateID + 1
         };
     });
-}
+};
+
+function clearTheWay(state,setState) {
+    let canvasUpdates = {};
+    for (let key in state.board) {
+        Object.assign(canvasUpdates, {[key]: {node:parseKey(key), type:'empty', fill:'white', object:null}});
+    }
+    Object.assign(canvasUpdates, {[[state.startNode.i,state.startNode.j]]: state.board[[state.startNode.i,state.startNode.j]]});
+    Object.assign(canvasUpdates, {[[state.targetNode.i,state.targetNode.j]]: state.board[[state.targetNode.i,state.targetNode.j]]});
+    setState((prevState) => {
+        return {
+                    board: canvasUpdates, 
+                    canvasUpdates: canvasUpdates,
+                    updateID: prevState.updateID + 1
+        };
+    });
+};
 
 //=====================================================================================//
 // Basic Drawing Functions //
@@ -673,6 +689,6 @@ function parseKey(key) {
 // Exports //
 //=====================================================================================//
 export {getPointerNode, onMouseDown, onTouchStart}
-export {drawSearch, drawLine, moveStart, moveTarget, clearBoard, doTheJohnWall, lightWeightBaby}
+export {drawSearch, drawLine, moveStart, moveTarget, clearBoard, doTheJohnWall, lightWeightBaby, clearTheWay}
 export {drawWeight, drawStart, drawStartPos, drawTarget, drawNode, drawHex, fillHex};
 export {sleep, calcHexCenter, nodeDistance, nearestHex, calcHexPath, calcUnits, initializeBoard, initializeCanvas, parseKey};

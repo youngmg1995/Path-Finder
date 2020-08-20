@@ -2,7 +2,8 @@ import {
     isSameNode, nodeOnBoard, isValidNode, findNeighbors, manhattanDistance, minHeap, shuffleArray, getRandomNode,
     getRandomWallNode, getRandomNeighbor, disjointSet
 } from './utils';
-import { parseKey } from './canvas-tools';
+import { parseKey, calcHexCenter } from './canvas-tools';
+import {noise} from './perlin';
 
 
 //=================================================================================================================================//
@@ -300,6 +301,54 @@ function aStarSearch(startNode,targetNode,xUnits,yUnits,board) {
     return [[], searchUpdates];
 };
 
+// Modified A* For Use In Maze Buidlers //
+//======================================//
+const modifiedWeights = (type) => {
+    if (type === 0) return 1;
+    else return Math.random()*10000 + 1000;
+};
+
+function modifiedAStar(startNode,targetNode,xUnits,yUnits,board) {
+    // initialize queue of paths as minHeap and set of visited node
+    let lessThan = (path1,path2) => {return path1.estimatedDistance < path2.estimatedDistance;};
+    let queue = new minHeap(lessThan);
+    queue.insert({estimatedDistance:manhattanDistance(startNode,targetNode), distance:0 , path:[startNode]});
+    let visitedNodes = new Set();
+    // iteratively extend paths in queue until no possible paths left or target found
+    while (queue.length() > 0) {
+        let {distance, path} = queue.shift();
+        let currentNode = path[path.length - 1];
+        // check that node has not been extended already, if so drop path, else add to set of visited nodes and updates
+        if (visitedNodes.has(currentNode.i+','+currentNode.j)) continue;
+        visitedNodes.add(currentNode.i+','+currentNode.j);
+        // extend path by iterating over neighboring nodes (that are not walls or already extended)
+        let neighbors = findNeighbors(currentNode);
+        // filter to valid nodes
+        neighbors = neighbors.filter((node) => (nodeOnBoard(node,xUnits,yUnits) && !visitedNodes.has(node.i+','+node.j)));
+        for (let newNode of neighbors) {
+            let newPath = path.concat([newNode]);
+            let newDistance = distance + modifiedWeights(board[[newNode.i,newNode.j]]);
+            // if we found target then we have the shortest path, which we will then convert into canvas updates that are returned
+            if (isSameNode(newNode,targetNode)) {
+                let searchUpdates = [];
+                for (let node of newPath) {
+                    if (board[[node.i,node.j]] === 1) searchUpdates.push({node:node, type:'empty', fill:'white'});
+                }
+                return searchUpdates;
+            } else {
+                queue.insert({
+                    estimatedDistance: newDistance + manhattanDistance(newNode,targetNode), 
+                    distance:newDistance, 
+                    path:newPath
+                });
+            }
+        }
+    }
+    // Return empty updates if no path to target was found
+    console.log('got here, but should not have')
+    return [];
+};
+
 
 //=================================================================================================================================//
 // Maze Building Algorithms //
@@ -579,7 +628,7 @@ function randomDLA(startNode,targetNode,xUnits,yUnits,board) {
     let brownianNode = getRandomNode(xUnits,yUnits,pathNodes);
     pathNeighbors.add(brownianNode);
     // run loop that lets the brownianNode walk randomly around the board
-    while (pathNodes.size < (xUnits*yUnits)/8) {
+    while (pathNodes.size < (xUnits*yUnits)/6) {
         // updates for when brownianNode comes into contact with path
         if (pathNeighbors.has(brownianNode)) {
             // add node to pathNodes and add neighbors to pathNeighbors
@@ -635,6 +684,106 @@ function wallDLA(startNode,targetNode,xUnits,yUnits,board) {
     return mazePath;
 };
 
+function cellularDungeon(startNode,targetNode,xUnits,yUnits,board) {
+    // initialize array to keep track of path for drawing maze
+    let mazePath = [];
+    // initialize dictionary for keeping track of dungeon state (0 for empty and 1 for wall)
+    let dungeon = {};
+    // begin by iterating over whole board and randomly generating walls (with P(wall) = .35)
+    for (let key in board) {
+        let node = parseKey(key);
+        if (isSameNode(node,startNode) || isSameNode(node,targetNode)) {
+            dungeon[key] = 0;
+        // remove this to have walls be open
+        } else if (node.i === 0 || node.i === xUnits-1 || node.j === 0 || node.j === yUnits-1) {
+            mazePath.push({node:node, type:'wall', fill:'#282c34'})
+            dungeon[key] = 1;
+        } else if (Math.random() < .42) {
+            mazePath.push({node:node, type:'wall', fill:'#282c34'})
+            dungeon[key] = 1;
+        } else {
+            dungeon[key] = 0;
+        }
+    }
+    // now we let the board anneal over a set number of iterations to form the dungeons
+    for (let i=0; i<5; i++) {
+        let newDungeon = {};
+        // iterate over previous state and determine new state for each grid cell
+        for (let key in dungeon) {
+            const node = parseKey(key);
+            const neighborsStates = findNeighbors(node)
+                .filter((node) => nodeOnBoard(node,xUnits,yUnits))
+                // eslint-disable-next-line
+                .map((node) => dungeon[[node.i,node.j]]);
+            const wallCount = neighborsStates.reduce((state1,state2) => state1 + state2);
+            if (isSameNode(node,startNode) || isSameNode(node,targetNode)) {
+                newDungeon[key] = 0;
+            // remove this to have walls be open
+            } else if (node.i === 0 || node.i === xUnits-1 || node.j === 0 || node.j === yUnits-1) {
+                newDungeon[key] = 1;
+            } else if ((dungeon[key] && wallCount >= 2) || (!dungeon[key] && wallCount >= 4)) {
+                newDungeon[key] = 1;
+            } else {
+                newDungeon[key] = 0;
+            }
+            if (dungeon[key] !== newDungeon[key]) {
+                if (newDungeon[key] === 1) {
+                    mazePath.push({node:node, type:'wall', fill:'#282c34'})
+                } else {
+                    mazePath.push({node:node, type:'empty', fill:'white'})
+                }
+            }
+        }
+        dungeon = newDungeon
+    }
+    // use modified A* to ensure a path between the start and target nodes
+    let pathUpdates = modifiedAStar(startNode,targetNode,xUnits,yUnits,dungeon);
+    mazePath = mazePath.concat(pathUpdates);
+    // return path used to build the maze for animations
+    return mazePath;
+};
+
+function simplexCaves(startNode,targetNode,xUnits,yUnits,board,s,xOffset,yOffset) {
+    // initialize mazePath array for storing canvs updates and dungeon object for storing state of maze
+    let mazePath = [];
+    let dungeon = {};
+    // initiate perline noise
+    noise.seed(Math.random());
+    // for each node on the board grab the perlin noise value; if the value is above the cutoff, make it a wall, else empty
+    const defaultThreshold = .5;
+    // use below function to have threshold go to zero as we approach the edges (so the edges become walls)
+    function thresholdFunction(node) {
+        const offset = Math.ceil(Math.min(xUnits/10, yUnits/10));
+        if (node.i < offset) return defaultThreshold * (1 - (offset-node.i)/offset)**2;
+        if (node.j < offset) return defaultThreshold * (1 - (offset-node.j)/offset)**2;
+        if (node.i > xUnits-1-offset) return defaultThreshold * (1 - (offset-(xUnits-1-node.i))/offset)**2;
+        if (node.j > yUnits-1-offset) return defaultThreshold * (1 - (offset-(yUnits-1-node.j))/offset)**2;
+        else return defaultThreshold;
+    };
+    let scale = 150;
+    for (let key in board) {
+        let node = parseKey(key);
+        if (isSameNode(node,startNode) || isSameNode(node,targetNode)) {
+            dungeon[key] = 0;
+        } else {
+            const pos = calcHexCenter(node,s,xOffset,yOffset);
+            const noiseValue = (noise.simplex2(pos.x / scale, pos.y / scale) + 1) / 2;
+            const threshold = thresholdFunction(node);
+            if (noiseValue > threshold) {
+                dungeon[key] = 1;
+                mazePath.push({node:node, type:'wall', fill:'#282c34'});
+            } else {
+                dungeon[key] = 0;
+            }
+        }
+    }
+    // use modified A* to ensure a path between the start and target nodes
+    let pathUpdates = modifiedAStar(startNode,targetNode,xUnits,yUnits,dungeon);
+    mazePath = mazePath.concat(pathUpdates);
+    // return path used to build the maze for animations
+    return mazePath;
+}
+
 
 export {depthFirst, breadthFirst, hillClimbing, beamSearch, bestFirst, branchNBound, aStarSearch};
-export {randomWalls, randomWeights, depthFirstMaze, breadthFirstMaze, kruskalsMaze, primsMaze, huntAndKill, randomDLA, wallDLA}
+export {randomWalls, randomWeights, depthFirstMaze, breadthFirstMaze, kruskalsMaze, primsMaze, huntAndKill, randomDLA, wallDLA, cellularDungeon, simplexCaves}
