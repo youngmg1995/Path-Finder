@@ -354,16 +354,24 @@ function modifiedAStar(startNode,targetNode,xUnits,yUnits,board) {
 // Maze Building Algorithms //
 //=================================================================================================================================//
 function randomWalls(startNode,targetNode,xUnits,yUnits,board) {
-    // initialize array to keep track of path for drawing maze
+    // initialize array to keep track of path for drawing maze and dungeon object for state of maze
     let mazePath = [];
-    // iterate over whole board and randomly generate walls (with P(wall) = .50)
+    let dungeon = {};
+    // iterate over whole board and randomly generate walls (with P(wall) = .5)
     for (let key in board) {
         let node = parseKey(key);
-        if (isSameNode(node,startNode) || isSameNode(node,targetNode)) continue;
-        if (Math.random() < .45) {
+        if (isSameNode(node,startNode) || isSameNode(node,targetNode)) {
+            dungeon[key] = 0;
+        } else if (Math.random() < .50) {
+            dungeon[key] = 1;
             mazePath.push({node:node, type:'wall', fill:'#282c34'})
+        } else {
+            dungeon[key] = 0;
         }
     }
+    // use modified A* to ensure a path between the start and target nodes
+    let pathUpdates = modifiedAStar(startNode,targetNode,xUnits,yUnits,dungeon);
+    mazePath = mazePath.concat(pathUpdates);
     // return path used to build the maze for animations
     return mazePath;
 };
@@ -371,11 +379,11 @@ function randomWalls(startNode,targetNode,xUnits,yUnits,board) {
 function randomWeights(startNode,targetNode,xUnits,yUnits,board) {
     // initialize array to keep track of path for drawing maze
     let mazePath = [];
-    // iterate over whole board and randomly generate walls (with P(wall) = .50)
+    // iterate over whole board and randomly generate walls (with P(wall) = .5)
     for (let key in board) {
         let node = parseKey(key);
         if (isSameNode(node,startNode) || isSameNode(node,targetNode)) continue;
-        if (Math.random() < .45) {
+        if (Math.random() < .5) {
             mazePath.push({node:node, type:'weight', fill:'white', object:'weight'})
         }
     }
