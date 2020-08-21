@@ -13,6 +13,40 @@ import {noise} from './perlin';
 
 // Unweighted Algorithms //
 //=======================//
+function randomWalk(startNode,targetNode,xUnits,yUnits,board,isRunning) {
+    // initialize path (not queue since we will only have one path) 
+    let path = [startNode];
+    // initialize array for storing updates to canvas for animation
+    let searchUpdates = [];
+    // now take a random walk, checking neighboring nodes at each visited nodes until target is found
+    let startTime = new Date();
+    while (((new Date()).getTime() - startTime.getTime()) < 5000) {
+        let currentNode = path[path.length - 1];
+        let lastNode;
+        path.length < 2 ? lastNode = {i:-1,j:-1} : lastNode = path[path.length - 2];
+        if (!isSameNode(currentNode,startNode) && !isSameNode(currentNode,targetNode)) {
+            let newState = Object.assign({},board[[currentNode.i,currentNode.j]],{fill:'#6495ed'});
+            searchUpdates.push(newState);
+        }
+        // extend path by iterating over neighboring nodes (that are not walls or off the board)
+        let neighbors = findNeighbors(currentNode);
+        // filter to valid nodes and randomize their order
+        neighbors = shuffleArray(neighbors.filter((node) => (isValidNode(node,board,xUnits,yUnits))));
+        for (let node of neighbors) {
+            // if we found target return the completed path and updates, else add extended path to queue
+            if (isSameNode(node,targetNode)) {
+                return [path.concat([node]), searchUpdates];
+            } else {
+                if (!isSameNode(node,startNode) && !isSameNode(node,lastNode)) {
+                    let newState = Object.assign({},board[[node.i,node.j]],{fill:'#4b0082'});
+                    searchUpdates.push(newState);
+                }
+            }
+        }
+        path.push(neighbors[0])
+    }
+};
+
 function depthFirst(startNode,targetNode,xUnits,yUnits,board) {
     // initialize queue of paths and set of visited node
     let queue = [[startNode]];
@@ -793,5 +827,5 @@ function simplexCaves(startNode,targetNode,xUnits,yUnits,board,s,xOffset,yOffset
 }
 
 
-export {depthFirst, breadthFirst, hillClimbing, beamSearch, bestFirst, branchNBound, aStarSearch};
+export {randomWalk, depthFirst, breadthFirst, hillClimbing, beamSearch, bestFirst, branchNBound, aStarSearch};
 export {randomWalls, randomWeights, depthFirstMaze, breadthFirstMaze, kruskalsMaze, primsMaze, huntAndKill, randomDLA, wallDLA, cellularDungeon, simplexCaves}

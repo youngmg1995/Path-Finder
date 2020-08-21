@@ -1,9 +1,9 @@
 import {
-    depthFirst, breadthFirst, hillClimbing, beamSearch, bestFirst, branchNBound, aStarSearch,
-    randomWalls, randomWeights, depthFirstMaze, breadthFirstMaze, kruskalsMaze, primsMaze, huntAndKill, randomDLA, wallDLA, cellularDungeon, simplexCaves
+    randomWalk, depthFirst, breadthFirst, hillClimbing, beamSearch, bestFirst, branchNBound, aStarSearch,
+    randomWalls, randomWeights, depthFirstMaze, breadthFirstMaze, kruskalsMaze, primsMaze, huntAndKill, randomDLA, wallDLA, cellularDungeon, simplexCaves,
 } from './algorithms';
 import { calcHexCenter, nodeDistance, doTheJohnWall, lightWeightBaby, clearTheWay } from './canvas-tools';
-import { scalarProd, vectorSum, vectorDiff, vectorAngle } from './utils';
+import { scalarProd, vectorSum, vectorDiff, vectorAngle, isSameNode } from './utils';
 
 
 
@@ -66,13 +66,14 @@ function pathFinderAnimation(state,canvasRef,setState,isRunning) {
         case 4: pathFinder = bestFirst; break;
         case 5: pathFinder = branchNBound; break;
         case 6: pathFinder = aStarSearch; break;
+        case 7: pathFinder = randomWalk; break;
         default: pathFinder = breadthFirst;
     };
     let [path, searchUpdates] = pathFinder(state.startNode,state.targetNode,state.xUnits,state.yUnits,state.board);
-    searchAnimation(path,searchUpdates,state.s,state.xOffset,state.yOffset,state.speed,state.board,setState,isRunning);
+    searchAnimation(path,searchUpdates,state.startNode,state.s,state.xOffset,state.yOffset,state.speed,state.board,setState,isRunning);
 };
 
-function searchAnimation(path,searchUpdates,s,xOffset,yOffset,speed,board,setState,isRunning) {
+function searchAnimation(path,searchUpdates,startNode,s,xOffset,yOffset,speed,board,setState,isRunning) {
     let hexsPerSecond = searchSpeed[speed];
     let lastTime = null;
     let currentStart = 0;
@@ -107,7 +108,7 @@ function searchAnimation(path,searchUpdates,s,xOffset,yOffset,speed,board,setSta
             if (currentStart < totalHexs) {
                 requestAnimationFrame(frame);
             } else {
-                if (path.length > 0) drawPathAnimation(path,s,xOffset,yOffset,speed,board,setState,isRunning);
+                if (path.length > 0) drawPathAnimation(path,startNode,s,xOffset,yOffset,speed,board,setState,isRunning);
                 else {
                     setState((prevState) => ({
                         running: false,
@@ -122,11 +123,11 @@ function searchAnimation(path,searchUpdates,s,xOffset,yOffset,speed,board,setSta
     requestAnimationFrame(frame);
 };
 
-function drawPathAnimation(path,s,xOffset,yOffset,speed,board,setState,isRunning) {
+function drawPathAnimation(path,startNode,s,xOffset,yOffset,speed,board,setState,isRunning) {
     let hexsPerSecond = drawPathSpeed[speed];
     let pathUpdates = [];
     for (let node of path.slice(1,-1)) {
-        pathUpdates.push(Object.assign({},board[[node.i,node.j]],{fill:'#b1fc40'}));
+        if (!isSameNode(node,startNode)) pathUpdates.push(Object.assign({},board[[node.i,node.j]],{fill:'#b1fc40'}));
     }
     let lastTime = null;
     let currentStart = 0;

@@ -9,6 +9,7 @@ class ControlPanel extends React.Component {
         super(props);
         this.state = {
             algorithm: [
+                        {id:7, title:'Random Walk', selected:false, key:'algorithm'},
                         {id:0, title:'Depth-First Search', selected:false, key:'algorithm'},
                         {id:1, title:'Breadth-First Search', selected:false, key:'algorithm'},
                         {id:2, title:'Hill Climbing', selected:false, key:'algorithm'},

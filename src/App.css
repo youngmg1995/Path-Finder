@@ -91,6 +91,11 @@ canvas {
   .Algorithm-Dropdown-list, .Speed-Dropdown-list, .Tool-Dropdown-list, .Mazes-Dropdown-list, .Clear-Dropdown-list {
       font-size: 8vw;
       list-style-type: none;
+      padding-left: 0px;
+  }
+
+  .Clear-Dropdown-list {
+      padding-left: 40px;
       padding-right: 40px;
   }
 
@@ -100,6 +105,7 @@ canvas {
       flex-direction: column;
       justify-content: center;
       align-items: center;
+      padding-bottom:5vh;
   }
 
   .slider {
@@ -252,13 +258,13 @@ canvas {
       top: 15vh;
       left: 50vw;
       height: 81vh;
-      width: calc(50vw - 80px);
+      width: 50vw;
       overflow: scroll;
       display: flex;
       flex-direction: column;
       align-items: center;
       padding-top: 4vh;
-      padding-right: 40px;
+      padding-left: 0px;
       background-color: white;
   }
 
@@ -267,6 +273,7 @@ canvas {
       top: 15vh;
       left:50vw;
       height:75vh;
+      padding-bottom: 10vh;
       width: 50vw;
       font-size: 35vh;
       display: flex;
@@ -307,7 +314,7 @@ canvas {
   .Mazes-Dropdown-list .Dropdown-list-item:active, .Clear-Dropdown-list .Dropdown-list-item:active {
       background-color: #27af62;
       color: white;
-      border-radius: 2vw;
+      border-radius: 3vw;
   }
 
   .check {
@@ -434,7 +441,7 @@ canvas {
   }
   
   .Mazes-Dropdown-list {
-      width: calc(30vw *5/8);
+      width: calc(25vw *5/8);
   }
   
   .Clear-Dropdown-list {
@@ -572,7 +579,7 @@ canvas {
   }
   
   .Mazes-Dropdown-list {
-      width: 30vh;
+      width: 25vh;
   }
   
   .Clear-Dropdown-list {
