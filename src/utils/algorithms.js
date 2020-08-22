@@ -740,7 +740,7 @@ function cellularDungeon(startNode,targetNode,xUnits,yUnits,board) {
         } else if (node.i === 0 || node.i === xUnits-1 || node.j === 0 || node.j === yUnits-1) {
             mazePath.push({node:node, type:'wall', fill:'#282c34'})
             dungeon[key] = 1;
-        } else if (Math.random() < .42) {
+        } else if (Math.random() < .47) {
             mazePath.push({node:node, type:'wall', fill:'#282c34'})
             dungeon[key] = 1;
         } else {
@@ -763,7 +763,7 @@ function cellularDungeon(startNode,targetNode,xUnits,yUnits,board) {
             // remove this to have walls be open
             } else if (node.i === 0 || node.i === xUnits-1 || node.j === 0 || node.j === yUnits-1) {
                 newDungeon[key] = 1;
-            } else if ((dungeon[key] && wallCount >= 2) || (!dungeon[key] && wallCount >= 4)) {
+            } else if ((dungeon[key] && wallCount >= 3) || (!dungeon[key] && wallCount >= 4)) {
                 newDungeon[key] = 1;
             } else {
                 newDungeon[key] = 0;
@@ -792,14 +792,16 @@ function simplexCaves(startNode,targetNode,xUnits,yUnits,board,s,xOffset,yOffset
     // initiate perline noise
     noise.seed(Math.random());
     // for each node on the board grab the perlin noise value; if the value is above the cutoff, make it a wall, else empty
-    const defaultThreshold = .5;
+    const defaultThreshold = .65;
     // use below function to have threshold go to zero as we approach the edges (so the edges become walls)
+    const offset = Math.ceil(Math.min(xUnits/20, yUnits/20));
     function thresholdFunction(node) {
-        const offset = Math.ceil(Math.min(xUnits/10, yUnits/10));
-        if (node.i < offset) return defaultThreshold * (1 - (offset-node.i)/offset)**2;
-        if (node.j < offset) return defaultThreshold * (1 - (offset-node.j)/offset)**2;
-        if (node.i > xUnits-1-offset) return defaultThreshold * (1 - (offset-(xUnits-1-node.i))/offset)**2;
-        if (node.j > yUnits-1-offset) return defaultThreshold * (1 - (offset-(yUnits-1-node.j))/offset)**2;
+        const x = Math.min(node.i, xUnits-1-node.i);
+        const y = Math.min(node.j, yUnits-1-node.j);
+        const z = Math.min(x,y);
+        if (z < offset) {
+            return defaultThreshold * (1 - ((offset-z)/offset)**2);
+        }
         else return defaultThreshold;
     };
     let scale = 150;
