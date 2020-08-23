@@ -21,10 +21,11 @@ canvas {
                                   supported by Chrome, Edge, Opera and Firefox */
 }
   
-.Dropdown:hover, .Play-Button:hover{
+.Dropdown:hover, .Play-Button:hover, .Tutorial-End-Button, .Tutorial-Previous-Button, .Tutorial-Next-Button{
   cursor: default;
   cursor: pointer;
 }
+
 
 /*=========================================================================================================================================*/
 /* -1) Smallest Layout (Basically for mobile right side up)
@@ -635,4 +636,201 @@ canvas {
     visibility: hidden;
     position: absolute;
   }
+}
+
+
+/*=========================================================================================================================================*/
+/* Tutorial */
+/*=========================================================================================================================================*/
+.Tutorial-Outer-Wrapper {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    z-index: 2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.Tutorial-Inner-Wrapper {
+    height: 90%;
+    width: 90%;
+    border-radius: 2vw;
+    border: .25vw solid black;
+    background-color: white;
+}
+
+.Tutorial-Page-Indicator {
+    position: absolute;
+    right: 14.5%;
+    top: 7.5%;
+}
+
+.Tutorial-Page-1, .Tutorial-Page-2, .Tutorial-Page-3, .Tutorial-Page-4, .Tutorial-Page-5 {
+    height: calc(100% - 2.5%*10/9 - 4em);
+    width:100%;
+}
+
+.Tutorial-Header-Spacer {
+    height: 5%;
+}
+
+.Tutorial-Page-Header {
+    width:100%;
+    font-size: 3em;
+    text-align: center;
+}
+
+.Tutorial-Page-Content {
+    height: calc(100% - 4em - 5%);
+    width: 90%;
+    padding-left: 5%;
+    padding-right: 5%;
+    overflow: auto;
+    text-align: center;
+    align-content: center;
+}
+
+.Tutorial-Buttons-Wrapper {
+    position: absolute;
+    left: 5%;
+    bottom:7.5%;
+    width:90%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+}
+
+.End-Button-Wrapper {
+    width: 45%;
+    padding-left: 5%;
+}
+
+.Page-Buttons-Wrapper {
+    width: 45%;
+    padding-right: 5%;
+}
+
+.Tutorial-End-Button {
+    float: left;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.5em;
+    padding-top:2%;
+    padding-bottom:2%;
+    padding-left:4%;
+    padding-right:4%;
+    border-radius: 1vw;
+    background-color:#27af62;
+}
+
+.Tutorial-Previous-Button, .Tutorial-Next-Button {
+    float: right;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2em;
+    padding-top:2%;
+    padding-bottom:2%;
+    padding-left:4%;
+    padding-right:4%;
+    border-radius: 1vw;
+    background-color:#27af62;
+}
+
+.Tutorial-Previous-Button {
+    margin-right: 4%;
+}
+
+/* Page 1 */
+/*=================================*/
+.Tutorial-Page-1 .Tutorial-Page-Content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.Tutorial-Page-1 .Page-Sub-Header {
+    padding-top: 1em;
+}
+
+.Tutorial-Page-1 .Page-Instructions {
+    padding-top: 1em;
+}
+/*
+.Image-Wrapper {
+    flex: 1 1 auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+*/
+.Tutorial-Page-1 .Image-Wrapper {
+    height: calc(100% - 5em);
+    padding-top: 0em;
+    padding-bottom: 0em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.Tutorial-Page-1 .Path-Finder-Logo {
+    max-width: 75%;
+    max-height: 75%;
+}
+
+/* Page 2 */
+/*=================================*/
+.Tutorial-Page-2 .Tutorial-Page-Content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.Tutorial-Page-2 .Page-Sub-Header {
+    padding-top: 1em;
+}
+
+.Tutorial-Page-2 .Page-Instructions-1, .Tutorial-Page-2 .Page-Instructions-2, .Tutorial-Page-2 .Page-Instructions-3 {
+    padding-top: 1em;
+}
+
+.Tutorial-Page-2 .Page-Instructions-3, .Tutorial-Page-2 .Page-Instructions-4 {
+    padding-top: 2em;
+}
+
+.Tutorial-Page-2 .Image-Wrapper-1 {
+    padding-top: 1em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.Tutorial-Page-2 .Image-1 {
+    max-width: 75%;
+    max-height: 75%;
+}
+
+.Tutorial-Page-2 .Content-Box-1, .Tutorial-Page-2 .Content-Box-2, .Tutorial-Page-2 .Content-Box-3 {
+    padding-top: 1em;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+}
+
+.Tutorial-Page-2 .Image-Wrapper-2, .Tutorial-Page-2 .Image-Wrapper-3, .Tutorial-Page-2 .Image-Wrapper-4, .Tutorial-Page-2 .Image-Wrapper-5,
+.Tutorial-Page-2 .Image-Wrapper-6, .Tutorial-Page-2 .Image-Wrapper-7 {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.Tutorial-Page-2 .Image-2, .Tutorial-Page-2 .Image-3, .Tutorial-Page-2 .Image-4, .Tutorial-Page-2 .Image-5,
+.Tutorial-Page-2 .Image-6, .Tutorial-Page-2 .Image-7 {
+    padding-top: .25em;
+    max-width: 75%;
+    max-height: 75%;
 }

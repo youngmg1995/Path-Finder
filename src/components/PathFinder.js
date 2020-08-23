@@ -1,4 +1,5 @@
 import React from 'react';
+import Tutorial from './Tutorial';
 import ControlPanel from './ControlPanel';
 import Canvas from './Canvas';
 import {onMouseDown, onTouchStart, clearBoard, initializeCanvas} from '../utils/canvas-tools';
@@ -24,6 +25,8 @@ class PathFinder extends React.Component {
         let {board,startNode,targetNode,xUnits,yUnits,xOffset,yOffset,lineWidth} = initializeCanvas(canvasWidth,canvasHeight,s);
         // Setting Initial State
         this.state = {
+            showTutorial: true,
+            tutorialPage: 1,
             windowState: this.getWindowState(),
             showControls: showControls,
             algorithm: 5,
@@ -141,6 +144,25 @@ class PathFinder extends React.Component {
         mazeAnimation(id,this.state,setState,isRunning);
     }
 
+    toggleTutorial() {
+        this.setState((prevState) => {
+            return {
+                showTutorial: !prevState.showTutorial,
+                tutorialPage: 1
+            };
+        });
+    }
+
+    changePage(direction) {
+        this.setState((prevState) => {
+            if ((direction === -1 && prevState.tutorialPage === 1) || (direction === 1 && prevState.tutorialPage === 5)) {
+                return {};
+            } else {
+                return {tutorialPage: prevState.tutorialPage + direction};
+            }
+        });
+    }
+
     render() {
         const algorithmMap = {
             0: "Depth-First Search",
@@ -149,10 +171,18 @@ class PathFinder extends React.Component {
             3: "Beam Search (\u03C9=2)",
             4: "Best-First Search",
             5: "Branch & Bound",
-            6: "A* Search"
+            6: "A* Search",
+            7: "Random Walk"
         };
         return (
             <div className="PathFinder">
+                {this.state.showTutorial &&
+                    <Tutorial className="Tutorial"
+                        tutorialPage={this.state.tutorialPage}
+                        toggleTutorial={(event) => this.toggleTutorial()}
+                        changePage={(direction) => this.changePage(direction)}
+                    />
+                }
                 <div className="Bars-Wrapper">
                     <FontAwesomeIcon className="bars" icon={faBars} onClick={(event) => this.toggleControls()}/>
                     <div className="Algorithm-Text">{algorithmMap[this.state.algorithm]}</div>
