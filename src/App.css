@@ -788,7 +788,6 @@ canvas {
 /* Page 2 */
 /*=================================*/
 .Tutorial-Page-2 .Tutorial-Page-Content {
-    flex: 1 1 auto;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -807,6 +806,7 @@ canvas {
 }
 
 .Tutorial-Page-2 .Image-Wrapper-1 {
+    flex: 1 1 auto;
     padding-top: 1em;
     display: flex;
     justify-content: center;
@@ -819,6 +819,7 @@ canvas {
 }
 
 .Tutorial-Page-2 .Content-Box-1, .Tutorial-Page-2 .Content-Box-2, .Tutorial-Page-2 .Content-Box-3 {
+    flex: 1 1 auto;
     padding-top: 1em;
     display: flex;
     flex-wrap: wrap;
@@ -887,7 +888,6 @@ canvas {
 /* Page 4 */
 /*=================================*/
 .Tutorial-Page-4 .Tutorial-Page-Content {
-    flex: 1 1 auto;
     display: flex;
     flex-direction: column;
     align-items: center;
