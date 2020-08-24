@@ -756,6 +756,7 @@ canvas {
     flex-direction: column;
     align-items: center;
 }
+
 .Tutorial-Page-1 .Page-Sub-Header {
     padding-top: 1em;
 }
@@ -792,6 +793,7 @@ canvas {
     flex-direction: column;
     align-items: center;
 }
+
 .Tutorial-Page-2 .Page-Sub-Header {
     padding-top: 1em;
 }
@@ -889,6 +891,7 @@ canvas {
     flex-direction: column;
     align-items: center;
 }
+
 .Tutorial-Page-4 .Page-Sub-Header {
     padding-top: 1em;
 }
@@ -943,6 +946,11 @@ canvas {
 
 /* Page 5 */
 /*=================================*/
+.Tutorial-Page-5 .Tutorial-Page-Content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
 
 .Tutorial-Page-5 .Page-Sub-Header {
     padding-top: 1em;
