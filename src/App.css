@@ -792,7 +792,6 @@ canvas {
     flex-direction: column;
     align-items: center;
 }
-
 .Tutorial-Page-2 .Page-Sub-Header {
     padding-top: 1em;
 }
@@ -806,7 +805,6 @@ canvas {
 }
 
 .Tutorial-Page-2 .Image-Wrapper-1 {
-    flex: 1 1 auto;
     padding-top: 1em;
     display: flex;
     justify-content: center;
@@ -819,7 +817,6 @@ canvas {
 }
 
 .Tutorial-Page-2 .Content-Box-1, .Tutorial-Page-2 .Content-Box-2, .Tutorial-Page-2 .Content-Box-3 {
-    flex: 1 1 auto;
     padding-top: 1em;
     display: flex;
     flex-wrap: wrap;
@@ -941,5 +938,48 @@ canvas {
 }
 
 .Tutorial-Page-4 .Content-Box-3 {
+    padding-bottom: 1em;
+}
+
+/* Page 5 */
+/*=================================*/
+.Tutorial-Page-5 .Page-Sub-Header {
+    padding-top: 1em;
+}
+
+.Tutorial-Page-5 .Page-Instructions-1, .Tutorial-Page-5 .Page-Instructions-2, .Tutorial-Page-5 .Page-Instructions-3 {
+    padding-top: 1em;
+}
+
+.Tutorial-Page-5 .Page-Instructions-3, .Tutorial-Page-5 .Page-Instructions-4 {
+    padding-top: 2em;
+}
+
+.Tutorial-Page-5 .Image-Wrapper-1 {
+    padding-top: 1em;
+}
+
+.Tutorial-Page-5 .Image-1 {
+    max-width: 75%;
+    max-height: 75%;
+}
+
+.Tutorial-Page-5 .Content-Box-1, .Tutorial-Page-5 .Content-Box-2, .Tutorial-Page-5 .Content-Box-3 {
+    padding-top: 1em;
+}
+
+.Tutorial-Page-5 .Image-Wrapper-2, .Tutorial-Page-5 .Image-Wrapper-3, .Tutorial-Page-5 .Image-Wrapper-4, .Tutorial-Page-5 .Image-Wrapper-5,
+.Tutorial-Page-5 .Image-Wrapper-6, .Tutorial-Page-5 .Image-Wrapper-7 {
+    width: 50%;
+}
+
+.Tutorial-Page-5 .Image-2, .Tutorial-Page-5 .Image-3, .Tutorial-Page-5 .Image-4, .Tutorial-Page-5 .Image-5,
+.Tutorial-Page-5 .Image-6, .Tutorial-Page-5 .Image-7 {
+    padding-top: .25em;
+    max-width: 75%;
+    max-height: 75%;
+}
+
+.Tutorial-Page-5 .Content-Box-3 {
     padding-bottom: 1em;
 }
