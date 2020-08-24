@@ -787,13 +787,13 @@ canvas {
 
 /* Page 2 */
 /*=================================*/
-/*
 .Tutorial-Page-2 .Tutorial-Page-Content {
+    flex: 1 1 auto;
     display: flex;
     flex-direction: column;
     align-items: center;
 }
-*/
+
 .Tutorial-Page-2 .Page-Sub-Header {
     padding-top: 1em;
 }
@@ -887,6 +887,7 @@ canvas {
 /* Page 4 */
 /*=================================*/
 .Tutorial-Page-4 .Tutorial-Page-Content {
+    flex: 1 1 auto;
     display: flex;
     flex-direction: column;
     align-items: center;
