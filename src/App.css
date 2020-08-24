@@ -978,6 +978,10 @@ canvas {
 .Tutorial-Page-5 .Image-Wrapper-2, .Tutorial-Page-5 .Image-Wrapper-3, .Tutorial-Page-5 .Image-Wrapper-4, .Tutorial-Page-5 .Image-Wrapper-5,
 .Tutorial-Page-5 .Image-Wrapper-6, .Tutorial-Page-5 .Image-Wrapper-7 {
     width: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 .Tutorial-Page-5 .Image-2, .Tutorial-Page-5 .Image-3, .Tutorial-Page-5 .Image-4, .Tutorial-Page-5 .Image-5,
