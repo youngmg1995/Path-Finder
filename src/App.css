@@ -957,6 +957,9 @@ canvas {
 
 .Tutorial-Page-5 .Image-Wrapper-1 {
     padding-top: 1em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .Tutorial-Page-5 .Image-1 {
@@ -966,6 +969,10 @@ canvas {
 
 .Tutorial-Page-5 .Content-Box-1, .Tutorial-Page-5 .Content-Box-2, .Tutorial-Page-5 .Content-Box-3 {
     padding-top: 1em;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
 }
 
 .Tutorial-Page-5 .Image-Wrapper-2, .Tutorial-Page-5 .Image-Wrapper-3, .Tutorial-Page-5 .Image-Wrapper-4, .Tutorial-Page-5 .Image-Wrapper-5,
