@@ -691,7 +691,7 @@ canvas {
     width: 90%;
     padding-left: 5%;
     padding-right: 5%;
-    overflow: scroll;
+    overflow: auto;
     text-align: center;
     align-content: center;
 }
@@ -943,6 +943,7 @@ canvas {
 
 /* Page 5 */
 /*=================================*/
+
 .Tutorial-Page-5 .Page-Sub-Header {
     padding-top: 1em;
 }
