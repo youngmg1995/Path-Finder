@@ -683,6 +683,7 @@ canvas {
     width:100%;
     font-size: 3em;
     text-align: center;
+    padding-bottom: calc(1em / 6);
 }
 
 .Tutorial-Page-Content {
@@ -690,7 +691,7 @@ canvas {
     width: 90%;
     padding-left: 5%;
     padding-right: 5%;
-    overflow: auto;
+    overflow: scroll;
     text-align: center;
     align-content: center;
 }
@@ -839,6 +840,10 @@ canvas {
     max-height: 75%;
 }
 
+.Tutorial-Page-2 .Content-Box-3 {
+    padding-bottom: 1em;
+}
+
 /* Page 3 */
 /*=================================*/
 .Tutorial-Page-3 .Tutorial-Page-Content {
@@ -873,6 +878,10 @@ canvas {
     text-align: left;
 }
 
+.Tutorial-Page-3 .Algorithm-8 {
+    padding-bottom: 1em;
+}
+
 /* Page 4 */
 /*=================================*/
 .Tutorial-Page-4 .Tutorial-Page-Content {
@@ -893,15 +902,15 @@ canvas {
 }
 
 .Tutorial-Page-4 .Image-Wrapper-1 {
-    padding-top: 1em;
+    width:66%;
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
 .Tutorial-Page-4 .Image-1 {
-    max-width: 75%;
-    max-height: 75%;
+    max-width: 85%;
+    max-height: 85%;
 }
 
 .Tutorial-Page-4 .Content-Box-1, .Tutorial-Page-4 .Content-Box-2, .Tutorial-Page-4 .Content-Box-3 {
@@ -926,4 +935,8 @@ canvas {
     padding-top: .25em;
     max-width: 50%;
     max-height: 50%;
+}
+
+.Tutorial-Page-4 .Content-Box-3 {
+    padding-bottom: 1em;
 }

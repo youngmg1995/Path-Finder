@@ -85,7 +85,7 @@ function Tutorial(props) {
                             <p className="Algorithm-5"><b>Beam Search (w=2):</b> Like breadth-first search, but uses a distance heuristic to limit the extensions of the closest node to the two directions closest to the target. More efficient, but does not guarantee the shortest path.</p>
                             <p className="Algorithm-6"><b>Best-First Search:</b> Like breadth-first search, but uses a distance heuristic to always extend the node closest to the target rather than the node closest to the start. Very efficient, but does not guarantee the shortest path.</p>
                             <h2 className="Content-Header-2">Weighted</h2>
-                            <p className="Algorithm-7"><b>Branch & Bound:</b> Also referred to as Dijkstra's algorithm, this is the weighted equivalent of breadth-first search. Inefficiet but guarantees the least costly path.</p>
+                            <p className="Algorithm-7"><b>Branch & Bound:</b> Also referred to as Dijkstra's algorithm, this is the weighted equivalent of breadth-first search. Inefficient but guarantees the least costly path.</p>
                             <p className="Algorithm-8"><b>A* Search:</b> Like branch & bound, but uses a distance heuristic to encourage searching down paths in the direction of the target first. Efficient and guarantees the least costly path making it hands down the best algorithm.</p>
                         </div>
                     </div>
