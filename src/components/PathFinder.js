@@ -155,7 +155,7 @@ class PathFinder extends React.Component {
 
     changePage(direction) {
         this.setState((prevState) => {
-            if ((direction === -1 && prevState.tutorialPage === 1) || (direction === 1 && prevState.tutorialPage === 5)) {
+            if ((direction === -1 && prevState.tutorialPage === 1) || (direction === 1 && prevState.tutorialPage === 8)) {
                 return {};
             } else {
                 return {tutorialPage: prevState.tutorialPage + direction};
