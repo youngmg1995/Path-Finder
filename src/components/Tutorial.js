@@ -35,6 +35,10 @@ import Random from "../static/Random.png";
 import Maze from "../static/Maze.png";
 import Fractal from "../static/Fractal.png";
 import Caves from "../static/Caves.png";
+// Page 8
+import Play from "../static/Play.png";
+import Pause from "../static/Pause.png";
+
 
 
 
@@ -51,7 +55,7 @@ function Tutorial(props) {
                         <h1 className="Tutorial-Page-Header">Tutorial</h1>
                         <div className="Tutorial-Page-Content">
                             <h3 className="Page-Sub-Header">Welcome To Path-Finder: The React App For Visualizing Path-Finding Algorithms!!!</h3>
-                            <p className="Page-Instructions">This tutorial will instruct you on how to use the App. When finished hit "Exit Tutorial" to get started.</p>
+                            <p className="Page-Instructions">This tutorial will instruct you on how to use the app. When finished hit "Exit Tutorial" to get started.</p>
                             <div className="Image-Wrapper"><img className="Path-Finder-Logo" alt="Logo" src={Logo}/></div>
                         </div>
                     </div>
@@ -187,7 +191,7 @@ function Tutorial(props) {
                         <h1 className="Tutorial-Page-Header">Drawing</h1>
                         <div className="Tutorial-Page-Content">
                             <h3 className="Page-Sub-Header">How To Manipulate The Board</h3>
-                            <p className="Page-Instructions-1">In order to create unique board configuration, users have the ability to manually manipulate the hex board. This includes moving the start and target nodes, as well as creating wall, weighted, or empty nodes by drawing on the canvas.</p>
+                            <p className="Page-Instructions-1">In order to create unique board configurations, users have the ability to manually manipulate the hex board. This includes moving the start and target nodes, as well as creating wall, weighted, or empty nodes by drawing on the canvas.</p>
                             <h2 className="Content-Header">Move Start/Target Node</h2>
                             <p className="Page-Instructions-2">To move the start or target node, simply click and drag the node to the desired new position.</p>
                             <div className="Image-Wrapper-1"><img className="Image-1" alt="loading..." src={Dragging}/></div>
@@ -247,7 +251,14 @@ function Tutorial(props) {
                         <div className="Tutorial-Header-Spacer"></div>
                         <h1 className="Tutorial-Page-Header">Run</h1>
                         <div className="Tutorial-Page-Content">
-                            
+                            <h3 className="Page-Sub-Header">How To Start The Path-Finder</h3>
+                            <p className="Page-Instructions-1">Once you are happy with your choice of algorithm, settings, and board configuration, you can start the path-finding visualization by simply hitting the play button. At any point during the path-finding or maze-building visualizations you can stop the animation by again hitting the play/pause button.</p>
+                            <div className="Content-Box-1">
+                                <div className="Image-Wrapper-1"><b>Start</b><img className="Image-1" alt="loading..." src={Play}/></div>
+                                <div className="Image-Wrapper-2"><b>Stop</b><img className="Image-2" alt="loading..." src={Pause}/></div>
+                            </div>
+                            <h2 className="Content-Header">Enjoy!!!</h2>
+                            <p className="Page-Instructions-2">This concludes the tutorial; hit "Exit Tutorial" to begin using the app. Be sure to try out all the algorithms, mazes, and functionalities offered by the game. If you enjoy the app, please consider liking and contributing to the project which can be found on <a href="https://github.com/youngmg1995/Path-Finding-App" target="_blank" rel="noopener noreferrer">Github</a>.</p>
                         </div>
                     </div>
                 }

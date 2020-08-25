@@ -1076,3 +1076,44 @@ canvas {
 .Tutorial-Page-7 .Last-Options-List {
     padding-bottom:1em;
 }
+
+/* Page 8 */
+/*=================================*/
+.Tutorial-Page-8 .Page-Sub-Header {
+    padding-top: 1em;
+}
+
+.Tutorial-Page-8 .Page-Instructions-1, .Tutorial-Page-8 .Page-Instructions-2 {
+    padding-top: 1em;
+}
+
+.Tutorial-Page-8 .Content-Box-1 {
+    padding-top: 1em;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+}
+
+.Tutorial-Page-8 .Image-Wrapper-1, .Tutorial-Page-8 .Image-Wrapper-2 {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.Tutorial-Page-8 .Image-1, .Tutorial-Page-8 .Image-2 {
+    padding-top: .25em;
+    max-width: 50%;
+    max-height: 50%;
+    border-radius: 1em;
+}
+
+.Tutorial-Page-8 .Content-Header {
+    padding-top: 1.5em;
+}
+
+Tutorial-Page-8 .Page-Instructions-2 {
+    padding-bottom: 1em;
+}
