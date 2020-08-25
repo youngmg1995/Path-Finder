@@ -24,6 +24,18 @@ import Wall from "../static/Wall.png";
 import Searched from "../static/Searched.png";
 import Extended from "../static/Extended.png";
 import FinalPath from "../static/Final-Path.png";
+// Page 5
+import Dropdown from "../static/Dropdown.png";
+import BarsIcon from "../static/Bars-Icon.png";
+// Page 6
+import Dragging from "../static/Dragging-GIF.gif"
+import Drawing from "../static/Drawing-GIF.gif"
+// Page 7
+import Random from "../static/Random.png";
+import Maze from "../static/Maze.png";
+import Fractal from "../static/Fractal.png";
+import Caves from "../static/Caves.png";
+
 
 
 function Tutorial(props) {
@@ -38,7 +50,7 @@ function Tutorial(props) {
                         <div className="Tutorial-Header-Spacer"></div>
                         <h1 className="Tutorial-Page-Header">Tutorial</h1>
                         <div className="Tutorial-Page-Content">
-                            <h3 className="Page-Sub-Header">Welcome to Path-Finder the React App for Visualizing Path-Finding Algorithms!!!</h3>
+                            <h3 className="Page-Sub-Header">Welcome To Path-Finder: The React App For Visualizing Path-Finding Algorithms!!!</h3>
                             <p className="Page-Instructions">This tutorial will instruct you on how to use the App. When finished hit "Exit Tutorial" to get started.</p>
                             <div className="Image-Wrapper"><img className="Path-Finder-Logo" alt="Logo" src={Logo}/></div>
                         </div>
@@ -49,7 +61,7 @@ function Tutorial(props) {
                         <div className="Tutorial-Header-Spacer"></div>
                         <h1 className="Tutorial-Page-Header">Path-Finding</h1>
                         <div className="Tutorial-Page-Content">
-                            <h3 className="Page-Sub-Header">What is a Path-Finding Algorithm?</h3>
+                            <h3 className="Page-Sub-Header">What Is A Path-Finding Algorithm?</h3>
                             <p className="Page-Instructions-1">Path-finding algorithms are computer programs used to search for paths from one place to another.</p>
                             <div className="Image-Wrapper-1"><img className="Image-1" alt="loading..." src={PathFinding}/></div>
                             <p className="Page-Instructions-2">Path-finding algorithms come in two flavors <b>Weighted</b> and <b>Unweighted</b>. Unweighted algorithms simply account for the number of moves from one node to another, while Weighted algorithms also take into account additional costs associated with each move. </p>
@@ -123,6 +135,49 @@ function Tutorial(props) {
                         <div className="Tutorial-Header-Spacer"></div>
                         <h1 className="Tutorial-Page-Header">Controls</h1>
                         <div className="Tutorial-Page-Content">
+                            <h3 className="Page-Sub-Header">How To Interact With The App</h3>
+                            <p className="Page-Instructions-1">Most controls for the app are located in the control panel as dropdowns. For larger devices the control panel is simply located at the top of the app and for smaller devices the control panel can be reached by clicking on the &#8801; icon.</p>
+                            <div className="Content-Box-1">
+                                <div className="Image-Wrapper-1"><b>Large Devices</b><img className="Image-1" alt="loading..." src={Dropdown}/></div>
+                                <div className="Image-Wrapper-2"><b>Small Devices</b><img className="Image-2" alt="loading..." src={BarsIcon}/></div>
+                            </div>
+                            <p className="Page-Instructions-2"> Below is a short description of each of the control categories. For those that are not covered in detail elsewhere in the tutorial, explanations of the control options are also included.</p>
+                            <h2 className="Content-Header">Algorithm</h2>
+                            <p className="Description"><b>Description:</b> Allows you to select which path-finding algorithm will be visualized.</p>
+                            <p className="Options"><b>Options:</b> See page 3</p>
+                            <h2 className="Content-Header">Speed</h2>
+                            <p className="Description"><b>Description:</b> Determines the speed of the path-finding and maze-building visualizations.</p>
+                            <p className="Options"><b>Options:</b></p>
+                            <ul className="Options-List">
+                                <li className="Option"><b>Slow:</b> Slowest visualization speed, ~10 hexes/sec. Good for capturing every detail on small boards.</li>
+                                <li className="Option"><b>Medium:</b> Relatively slow visualization speed, ~100 hexes/sec. Appropriate for small boards.</li>
+                                <li className="Option"><b>Fast:</b> Default visualization speed, ~1,000 hexes/sec. Appropriate for most larger boards.</li>
+                                <li className="Option"><b>Ludicrous:</b> Fastest visualization speed, ~10,000 hexes/sec. Great for largest boards and mazes.</li>
+                                <li className="Option"><b>Instant:</b> Skips visualization animation and instantly shows path-finding or maze-building results.</li>
+                            </ul>
+                            <h2 className="Content-Header">Tool</h2>
+                            <p className="Description"><b>Description:</b> Tools used for manually drawing on the hex board.</p>
+                            <p className="Options"><b>Options:</b></p>
+                            <ul className="Options-List">
+                                <li className="Option"><b>Walls:</b> Converts selected hexes to wall nodes.</li>
+                                <li className="Option"><b>Weights:</b> Converts selected hexes to weighted nodes.</li>
+                                <li className="Option"><b>Eraser:</b> Converts selected hexes to empty nodes.</li>
+                            </ul>
+                            <h2 className="Content-Header">Hex Size</h2>
+                            <p className="Description"><b>Description:</b> Changes the size of the hex units comprising the board. Smaller sizes result in a finer board, while larger sizes result in a coarser board.</p>
+                            <h2 className="Content-Header">Mazes</h2>
+                            <p className="Description"><b>Description:</b> Generates random mazes and board configurations that are fun to visualize and solve.</p>
+                            <p className="Options"><b>Options:</b> See page 7</p>
+                            <h2 className="Content-Header">Clear</h2>
+                            <p className="Description"><b>Description:</b> Allows the you to remove certain elements from and/or completely reset the hex board.</p>
+                            <p className="Options"><b>Options:</b></p>
+                            <ul className="Last-Options-List">
+                                <li className="Option"><b>Path:</b> Removes all the path-finder visualizations from the board.</li>
+                                <li className="Option"><b>Walls:</b> Removes all the wall nodes from the board.</li>
+                                <li className="Option"><b>Weights:</b> Removes all the weighted nodes from the board.</li>
+                                <li className="Option"><b>Board:</b> Removes all elements from the board and returns the start and target nodes to their original positions.</li>
+                                <li className="Option"><b>Canvas:</b> Completely resets the hex board. This is useful for resizing the board to a new screen size or orientation.</li>
+                            </ul>
                         </div>
                     </div>
                 }
@@ -131,7 +186,14 @@ function Tutorial(props) {
                         <div className="Tutorial-Header-Spacer"></div>
                         <h1 className="Tutorial-Page-Header">Drawing</h1>
                         <div className="Tutorial-Page-Content">
-                            
+                            <h3 className="Page-Sub-Header">How To Manipulate The Board</h3>
+                            <p className="Page-Instructions-1">In order to create unique board configuration, users have the ability to manually manipulate the hex board. This includes moving the start and target nodes, as well as creating wall, weighted, or empty nodes by drawing on the canvas.</p>
+                            <h2 className="Content-Header">Move Start/Target Node</h2>
+                            <p className="Page-Instructions-2">To move the start or target node, simply click and drag the node to the desired new position.</p>
+                            <div className="Image-Wrapper-1"><img className="Image-1" alt="loading..." src={Dragging}/></div>
+                            <h2 className="Content-Header">Draw and Erase</h2>
+                            <p className="Page-Instructions-3">To draw on the board, first select the desired tool from the "Tool" dropdown in the control panel. Then click and drag over the nodes you wish to draw or erase.</p>
+                            <div className="Image-Wrapper-2"><img className="Image-2" alt="loading..." src={Drawing}/></div>
                         </div>
                     </div>
                 }
@@ -140,7 +202,43 @@ function Tutorial(props) {
                         <div className="Tutorial-Header-Spacer"></div>
                         <h1 className="Tutorial-Page-Header">Mazes</h1>
                         <div className="Tutorial-Page-Content">
-                            
+                            <h3 className="Page-Sub-Header">Generate Fun Board Configurations</h3>
+                            <p className="Page-Instructions-1">Drawing your own board configurations is fun, but having an algorithm generate them is even cooler!!! Included are numerous algorithms for procedurally generating and visualizing different types of unique board structures. Below we break them up into differet categories and explain each in detail.</p>
+                            <h2 className="Content-Header">Random</h2>
+                            <div className="Image-Wrapper-1"><img className="Image-1" alt="loading..." src={Random}/></div>
+                            <p className="Description"><b>Description:</b> Randomly assigns each hex on the board as a wall or weighted node with a 50% probability.</p>
+                            <p className="Options"><b>Options:</b></p>
+                            <ul className="Options-List">
+                                <li className="Option"><b>Random Walls:</b> Fills board randomly with wall nodes.</li>
+                                <li className="Option"><b>Random Weights:</b> Fills board randomly with weighted nodes.</li>
+                            </ul>
+                            <h2 className="Content-Header">Perfect Mazes</h2>
+                            <div className="Image-Wrapper-2"><img className="Image-2" alt="loading..." src={Maze}/></div>
+                            <p className="Description"><b>Description:</b> These are true maze building algorithms that generate a single unique path between the start and target nodes.</p>
+                            <p className="Options"><b>Options:</b></p>
+                            <ul className="Options-List">
+                                <li className="Option"><b>Depth-First Maze:</b> Generates mazes having a single long solution with short side-paths. Very difficult to solve by hand.</li>
+                                <li className="Option"><b>Breadth-First Maze:</b> Generates mazes that appear to radiate from a single starting point. As such, solutions are generally shorter, having many side-paths, and are fairly easy to solve by hand. </li>
+                                <li className="Option"><b>Hunt & Kill:</b> Similar to depth-first mazes, but the resulting path will include much longer side-paths. These are usually the most difficult to solve and my personal favorite.</li>
+                                <li className="Option"><b>Prim's Maze:</b> Similar to breadth-first mazes, but the resulting maze has much more randomness and complexity to it. Fairly difficult to solve by hand.</li>
+                                <li className="Option"><b>Kruskal's Maze:</b> Visually, this is the most interesting algorithm. It generates well balanced mazes in terms of difficulty of the solution and complexity of side paths.</li>
+                            </ul>
+                            <h2 className="Content-Header">DLA Fractals</h2>
+                            <div className="Image-Wrapper-3"><img className="Image-3" alt="loading..." src={Fractal}/></div>
+                            <p className="Description"><b>Description:</b> Using stochastic simulations, these algorithms generate Brownian tree fractals that resemble lightning and tree roots. While visually stunning, these algorithms are computationally expensive, so please allow up to 30sec for them to run.</p>
+                            <p className="Options"><b>Options:</b></p>
+                            <ul className="Options-List">
+                                <li className="Option"><b>Random DLA Fractal:</b> Generates Brownian trees that appear to radiate outward, evenly from a single point and sometimes are thicker near the center.</li>
+                                <li className="Option"><b>Wall DLA Fractal:</b> Generates Brownian trees that appear to grow towards the edges of the board and are usually of an even thickness.</li>
+                            </ul>
+                            <h2 className="Content-Header">Caves</h2>
+                            <div className="Image-Wrapper-4"><img className="Image-4" alt="loading..." src={Caves}/></div>
+                            <p className="Description"><b>Description:</b> These algorithms generate caves and dungeon-like maps on our hex board. Similar techniques are used by some video games to generate completely unique levels on the fly.</p>
+                            <p className="Options"><b>Options:</b></p>
+                            <ul className="Last-Options-List">
+                                <li className="Option"><b>Cellular Caves:</b> Uses a procedure similar to Conway's Game of Life. Results in very random and rough caves, but which do not scale very well.</li>
+                                <li className="Option"><b>Simplex Caves:</b> Samples a Simplex Noise function to generate very open and smooth caves that also scale incredibly well.</li>
+                            </ul>
                         </div>
                     </div>
                 }
