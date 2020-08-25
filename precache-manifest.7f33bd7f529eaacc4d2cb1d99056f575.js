@@ -1,27 +1,39 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "facd3c273011fbb4c35e0266e499c806",
+    "revision": "10a854b5397ba83ad15c4f4b9bbc4094",
     "url": "/Path-Finding-App/index.html"
   },
   {
-    "revision": "8b425fea8e31405fad06",
-    "url": "/Path-Finding-App/static/css/main.7e1e8d35.chunk.css"
+    "revision": "6b2a5cec796ec03e5a88",
+    "url": "/Path-Finding-App/static/css/main.9f933823.chunk.css"
   },
   {
-    "revision": "aff5c7ee71d139df0313",
-    "url": "/Path-Finding-App/static/js/2.09ead948.chunk.js"
+    "revision": "d4b3ccea6c114053be82",
+    "url": "/Path-Finding-App/static/js/2.fb3e357d.chunk.js"
   },
   {
     "revision": "e88a3e95b5364d46e95b35ae8c0dc27d",
-    "url": "/Path-Finding-App/static/js/2.09ead948.chunk.js.LICENSE.txt"
+    "url": "/Path-Finding-App/static/js/2.fb3e357d.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "8b425fea8e31405fad06",
-    "url": "/Path-Finding-App/static/js/main.0ff2808f.chunk.js"
+    "revision": "6b2a5cec796ec03e5a88",
+    "url": "/Path-Finding-App/static/js/main.f4e1330b.chunk.js"
   },
   {
     "revision": "b232a33ca01a22fb6625",
     "url": "/Path-Finding-App/static/js/runtime-main.42eef939.js"
+  },
+  {
+    "revision": "2567cabf64502dd10d628e0927f4c82a",
+    "url": "/Path-Finding-App/static/media/Caves.2567cabf.png"
+  },
+  {
+    "revision": "512cd2b443b8863739089b5268a57eb1",
+    "url": "/Path-Finding-App/static/media/Dragging-GIF.512cd2b4.gif"
+  },
+  {
+    "revision": "b737398eb9924bd19b3b9d2e979a5f91",
+    "url": "/Path-Finding-App/static/media/Drawing-GIF.b737398e.gif"
   },
   {
     "revision": "a9973a9f3032e13de7682dfa15a5ee3f",
@@ -36,12 +48,20 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/Path-Finding-App/static/media/Final-Path.9a1c54d3.png"
   },
   {
+    "revision": "78cbb12e2ad17febf747903f022e1fa9",
+    "url": "/Path-Finding-App/static/media/Fractal.78cbb12e.png"
+  },
+  {
     "revision": "b2f0461b109501a6f6b8a0c76e29431f",
     "url": "/Path-Finding-App/static/media/Heuristic.b2f0461b.png"
   },
   {
     "revision": "6ba570cbb3ac36b81de54524540a5c64",
     "url": "/Path-Finding-App/static/media/Hex-Grid.6ba570cb.png"
+  },
+  {
+    "revision": "1838f020ca7741347c2deebc7e5cd270",
+    "url": "/Path-Finding-App/static/media/Maze.1838f020.png"
   },
   {
     "revision": "e17a6ffa5d29f4117ec738c54127f944",
@@ -54,6 +74,10 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
     "revision": "e3278bc72c671dd387db81f60c02eb91",
     "url": "/Path-Finding-App/static/media/Path-Finding.e3278bc7.png"
+  },
+  {
+    "revision": "f7dc9f0feb9fbab61d36f044d46178cd",
+    "url": "/Path-Finding-App/static/media/Random.f7dc9f0f.png"
   },
   {
     "revision": "0ba80aecd4ea5ba37599a51a739c1a4c",
