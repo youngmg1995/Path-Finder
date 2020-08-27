@@ -30,7 +30,10 @@ function onMouseDown(downEvent,state,canvasRef,setState) {
             let board = {};
             if (onMoveType === 1) {
                 let oldStart = {[[origNode.i,origNode.j]]: {node:origNode,type:'empty',fill:'white',object:null}};
-                let newStart = {[[node.i,node.j]]: {node:node,type:'start',fill:'white',object:'start'}};
+                let angle;
+                if (state.xUnits > state.yUnits) angle = -Math.PI/2;
+                else angle = 0;
+                let newStart = {[[node.i,node.j]]: {node:node,type:'start',fill:'white',object:'start',angle:angle}};
                 Object.assign(board, state.board, oldStart, newStart);
                 setState({board:board});
             } else if (onMoveType === 2) {
@@ -94,7 +97,10 @@ function onTouchStart(startEvent,state,canvasRef,setState) {
         let board = {};
         if (onMoveType === 1) {
             let oldStart = {[[origNode.i,origNode.j]]: {node:origNode,type:'empty',fill:'white',object:null}};
-            let newStart = {[[node.i,node.j]]: {node:node,type:'start',fill:'white',object:'start'}};
+            let angle;
+            if (state.xUnits > state.yUnits) angle = -Math.PI/2;
+            else angle = 0;
+            let newStart = {[[node.i,node.j]]: {node:node,type:'start',fill:'white',object:'start',angle:angle}};
             Object.assign(board, state.board, oldStart, newStart);
             setState({board:board});
         } else if (onMoveType === 2) {
@@ -128,9 +134,6 @@ function drawLine(startNode,endNode,s,lineWidth,xOffset,yOffset,canvasRef,state,
     for (let n = 0; n <= N; n++) {
         const pos = line(n);
         const node = nearestHex(pos,s,xOffset,yOffset);
-        //console.log(n);
-        //console.log(pos);
-        //console.log(node);
         if (!nodeOnBoard(node,xUnits,yUnits)) break;
         if (isSameNode(node,state.startNode) || isSameNode(node,state.targetNode)) continue;
         // Fill in hex according to selected tool
@@ -352,7 +355,7 @@ function doTheJohnWall(state,setState) {
     });
 };
 
-function lightWeightBaby(state,setState) {
+function carryThatWeight(state,setState) {
     let canvasUpdates = {};
     for (let key in state.board) {
         Object.assign(canvasUpdates, {[key]: {node:parseKey(key), type:'weight', fill:'white', object:'weight'}});
@@ -689,6 +692,6 @@ function parseKey(key) {
 // Exports //
 //=====================================================================================//
 export {getPointerNode, onMouseDown, onTouchStart}
-export {drawSearch, drawLine, moveStart, moveTarget, clearBoard, doTheJohnWall, lightWeightBaby, clearTheWay}
+export {drawSearch, drawLine, moveStart, moveTarget, clearBoard, doTheJohnWall, carryThatWeight, clearTheWay}
 export {drawWeight, drawStart, drawStartPos, drawTarget, drawNode, drawHex, fillHex};
 export {sleep, calcHexCenter, nodeDistance, nearestHex, calcHexPath, calcUnits, initializeBoard, initializeCanvas, parseKey};

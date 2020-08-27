@@ -2,7 +2,7 @@ import {
     randomWalk, depthFirst, breadthFirst, hillClimbing, beamSearch, bestFirst, branchNBound, aStarSearch,
     randomWalls, randomWeights, depthFirstMaze, breadthFirstMaze, kruskalsMaze, primsMaze, huntAndKill, randomDLA, wallDLA, cellularDungeon, simplexCaves,
 } from './algorithms';
-import { calcHexCenter, nodeDistance, doTheJohnWall, lightWeightBaby, clearTheWay } from './canvas-tools';
+import { calcHexCenter, nodeDistance, doTheJohnWall, carryThatWeight, clearTheWay } from './canvas-tools';
 import { scalarProd, vectorSum, vectorDiff, vectorAngle, isSameNode } from './utils';
 
 
@@ -291,7 +291,7 @@ function victoryAnimation(targetNode,prevNode,speed,s,xOffset,yOffset,setState,i
 function mazeAnimation(mazeID,state,setState,isRunning) {
     // clear board or fill it with required fill for maze
     if (mazeID === 0 || mazeID === 1 || mazeID === 9 || mazeID === 10) clearTheWay(state,setState);
-    else if (mazeID === 7 || mazeID === 8) lightWeightBaby(state,setState);
+    else if (mazeID === 7 || mazeID === 8) carryThatWeight(state,setState);
     else doTheJohnWall(state,setState);
     // Set state to running so user can't interfere with pathFinder 
     setState((prevState) => ({
