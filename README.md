@@ -5,7 +5,7 @@ React App for Visualizing Path-Finding Algorithms
 
 <br></br>
 ## Overview
-Path-Finder is a single page web-app bootstrapped using [Create React App](https://create-react-app.dev/) that serves as tool for visualizing various path-finding and maze building algorithms. I decided to build this project while learning Javascript for the first time in order to put the new language to use and as a nice way of reviewing some of old algorithms. The app can be reached using the following link via desktop or mobile: [Path-Finder](https://youngmg1995.github.io/Path-Finding-App/), which can also be saved to your home screen for easy access later. If you like and enjoy the game, please star/follow the page and consider contributing to the project.
+Path-Finder is a single page web-app bootstrapped using [Create React App](https://create-react-app.dev/) that serves as tool for visualizing various path-finding and maze building algorithms. I decided to build this project while learning Javascript for the first time in order to put the new language to use and as a nice way of reviewing some of old algorithms. The app can be reached using the following link via desktop or mobile: [Path-Finder](https://youngmg1995.github.io/Path-Finder/), which can also be saved to your home screen for easy access later. If you like and enjoy the game, please star/follow the page and consider contributing to the project.
 
 ## Path-Finding Algorithms
 Below are short descriptions of the path-finding algorithms used in the app. The algorithms are broken up into two categories: 
